@@ -91,7 +91,7 @@ const ManageOrders = () => {
 
   return (
     <div className="manage-material-container">
-      <h1>Quản lý Đơn hàng</h1>
+      <h1>Order List</h1>
       {loading ? <div>Đang tải...</div> : (
         <table>
           <thead>

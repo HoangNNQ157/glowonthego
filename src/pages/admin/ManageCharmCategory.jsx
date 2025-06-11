@@ -89,14 +89,14 @@ const ManageCharmCategory = () => {
 
   return (
     <div className="manage-charm-category-container">
-      <h1>Quản lý Charm Category</h1>
+      <h1>Category List</h1>
       <div className="category-header">
         <div className="search-row">
           <input name="name" value={search.name} onChange={handleSearchChange} placeholder="Tìm kiếm tên danh mục..." />
           <input name="desc" value={search.desc} onChange={handleSearchChange} placeholder="Tìm kiếm mô tả..." />
         </div>
-        <button className="search-btn" onClick={handleSearch}>Tìm kiếm</button>
-        <button className="add-btn" onClick={()=>openModal()}>Thêm mới</button>
+        <button className="search-btn" onClick={handleSearch}>Search</button>
+        <button className="add-btn" onClick={()=>openModal()}>Add New</button>
       </div>
       {loading ? <div>Đang tải...</div> : (
         <table>

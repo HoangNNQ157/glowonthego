@@ -8,6 +8,7 @@ const ViewGifs = () => {
   const [folderImages, setFolderImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null); // Thêm trạng thái cho ảnh được chọn
 
   const fetchFolderImages = async () => {
     setLoading(true);
@@ -33,9 +34,14 @@ const ViewGifs = () => {
     setSelectedFolder(folder);
   };
 
+  const handleImageClick = (url) => {
+    // Cập nhật URL đã chọn, nếu bấm vào ảnh đã chọn thì bỏ chọn (null)
+    setSelectedImageUrl(selectedImageUrl === url ? null : url);
+  };
+
   return (
     <div className="view-files-container">
-      <h1>Quản lý Tệp</h1>
+      <h1>File Repository</h1>
 
       <div className="folder-selector">
         <button
@@ -69,8 +75,15 @@ const ViewGifs = () => {
 
               return (
                 <div className="file-item" key={index}>
-                  <img src={fileUrl} alt={`file-${index}`} className="file-thumbnail" />
+                  <img
+                    src={fileUrl}
+                    alt={`file-${index}`}
+                    className="file-thumbnail"
+                    onClick={() => handleImageClick(fileUrl)} // Bắt sự kiện khi bấm vào ảnh
+                  />
                   <p className="file-name">{originalFileName}</p>
+                  {/* Chỉ hiển thị URL của ảnh đã được chọn */}
+                  {selectedImageUrl === fileUrl && <p className="file-url">{fileUrl}</p>}
                 </div>
               );
             })}
@@ -80,4 +93,4 @@ const ViewGifs = () => {
   );
 };
 
-export default ViewGifs; 
+export default ViewGifs;

@@ -121,8 +121,8 @@ function Accounts() {
 
   return (
     <div className="accounts-admin-page">
-      <h1 className="admin-title">Quản lý tài khoản</h1>
-      <button className="add-btn" onClick={handleAdd}>+ Thêm tài khoản</button>
+      <h1 className="admin-title">Account Overview</h1>
+      <button className="add-btn" onClick={handleAdd}>+ Add New Account</button>
       {loading ? (
         <p>Đang tải danh sách tài khoản...</p>
       ) : (
