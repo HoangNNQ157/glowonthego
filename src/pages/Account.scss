@@ -1,0 +1,260 @@
+.account-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; // Light background color
+  padding: 20px;
+
+  .account-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; // Center content
+    max-width: 500px; // Limit width for better readability
+    width: 100%;
+
+    .account-title {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .account-info {
+      margin-top: 20px;
+      text-align: left; // Align text left within info block
+
+      p {
+        margin-bottom: 15px;
+        font-size: 16px;
+        color: #555;
+        line-height: 1.5;
+
+        strong {
+          display: inline-block;
+          width: 150px; // Adjust width for label alignment
+          color: #333;
+          font-weight: 600;
+        }
+      }
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .login-signup-text {
+      margin-top: 20px;
+      font-size: 14px;
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #333;
+        font-size: 16px;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #555;
+        box-sizing: border-box;
+
+        &:focus {
+          outline: none;
+          border-color: #007bff; // Highlight on focus
+        }
+      }
+    }
+
+    .account-actions {
+      margin-top: 25px;
+      display: flex; // Use flexbox for button layout
+      justify-content: center; // Center the buttons
+      gap: 15px; // Space between buttons
+
+      .account-logout-button,
+      .account-edit-button,
+      .account-save-button,
+      .account-cancel-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .account-logout-button {
+        background-color: #dc3545; // Red for logout
+        &:hover {
+          background-color: #c82333;
+        }
+      }
+
+      .account-edit-button {
+        background-color: #007bff; // Blue for edit
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+
+      .account-save-button {
+        background-color: #28a745; // Green for save
+        &:hover {
+          background-color: #218838;
+        }
+      }
+
+      .account-cancel-button {
+        background-color: #6c757d; // Grey for cancel
+        &:hover {
+          background-color: #5a6268;
+        }
+      }
+
+      .account-logout-button:disabled,
+      .account-edit-button:disabled,
+      .account-save-button:disabled,
+      .account-cancel-button:disabled {
+        background-color: #acb0b4;
+        cursor: not-allowed;
+      }
+    }
+
+    .orders-title {
+      font-size: 24px;
+      color: #333;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .loading-orders,
+    .error-orders,
+    .no-orders {
+      text-align: center;
+      color: #666;
+      font-size: 1.1rem;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .error-orders {
+        color: #dc3545;
+    }
+
+    .order-list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .order-item {
+      background-color: #fefefe;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+      h3 {
+        font-size: 1.3rem;
+        color: #000;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 8px;
+        strong {
+          font-weight: 600;
+          color: #333;
+          display: inline-block;
+          min-width: 120px; // Align labels
+        }
+      }
+
+      h4 {
+        font-size: 1.1rem;
+        color: #333;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      .order-products-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-top: 1px dashed #eee;
+        padding-top: 10px;
+      }
+
+      .order-product-item {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 5px;
+        padding-left: 10px;
+        position: relative;
+        display: flex; /* Use flexbox for alignment */
+        justify-content: space-between; /* Space out content and button */
+        align-items: center; /* Vertically align items */
+
+        span {
+            flex-grow: 1; /* Allow text to take up available space */
+            margin-right: 10px; /* Space between text and button */
+        }
+
+        &::before {
+            content: '- ';
+            position: absolute;
+            left: 0;
+            color: #999;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .review-product-btn {
+            background-color: #007bff; /* Blue button */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+      }
+    }
+  }
+} 

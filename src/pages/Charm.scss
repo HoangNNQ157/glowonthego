@@ -1,0 +1,229 @@
+.charm {
+  padding: 0;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  &__banner {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    margin-top: 200px;
+    padding: 0 40px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    &-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 5rem;
+      color: white;
+
+      h1 {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        text-align: left;
+      }
+
+      p {
+        font-size: 1.2rem;
+        text-align: left;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  &__large-image {
+    position: relative;
+    width: 50%;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 745 / 620;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      max-width: none;
+      margin-bottom: 1rem;
+      aspect-ratio: auto;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__large-image-text {
+    position: absolute;
+    bottom: 1rem; // Giảm khoảng cách từ bottom
+    left: 1rem; // Giảm khoảng cách từ left
+    color: white;
+    font-size: 1.5rem; // Giảm kích thước font
+    font-weight: normal; // Bỏ bold để khớp với hình ảnh
+    letter-spacing: 0; // Bỏ khoảng cách giữa các chữ
+  }
+
+  &__selection {
+    padding: 150px 0; // Giảm padding để khớp với hình ảnh
+
+    &-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin: 0 auto;
+      padding: 0 20px;
+      gap: 1rem; // Thêm khoảng cách giữa hình lớn và charms nhỏ
+
+      @media (max-width: 1200px) {
+        max-width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+    }
+  }
+
+  &__small-charms {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 414px;
+
+    @media (max-width: 768px) {
+      max-width: none;
+    }
+  }
+
+  &__small-charms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // Cố định 2 cột như trong hình
+    gap: 1rem;
+    margin-bottom: 1rem; // Giảm margin để khớp với hình ảnh
+    width: 100%;
+    justify-items: center;
+  }
+
+  &__small-charm-item {
+    text-align: center;
+
+    img {
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+      width: 150px;
+      border-radius: 5px;
+      background-color: #f5f5f5; // Màu nền nhạt hơn để khớp với hình
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: #181818;
+    }
+  }
+
+  &__shop-all-button {
+    background-color: black;
+    color: white;
+    padding: 1rem 3rem;
+    width: 258px;
+    height: 54px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem; // Giảm kích thước font để khớp với hình
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: background-color 0.3s ease;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background-color: #333;
+    }
+  }
+
+  &__add-charm,
+  &__build-story {
+    position: relative;
+    width: 100%;
+    height: 800px;
+    margin: 150px 0;
+    padding: 0 40px;
+    overflow: hidden;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    color: white;
+    /* Placeholder background images - replace with actual image paths */
+    background-size: cover;
+    background-position: center;
+
+    &-content {
+      z-index: 1; /* Ensure content is above background image */
+
+      h2 {
+        font-size: 3rem; /* Adjust font size based on image */
+        margin-bottom: 0.5rem;
+        text-align: left;
+      }
+
+      p {
+        font-size: 1.2rem; /* Adjust font size based on image */
+        margin-bottom: 1.5rem;
+        text-align: left;
+      }
+    }
+
+    &-button {
+      background-color: black;
+      color: white;
+      padding: 0.8rem 2rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 5px; /* Adjust border radius based on image */
+      text-transform: uppercase;
+      font-weight: 400; /* Adjust font weight based on image */
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #333;
+      }
+    }
+  }
+
+  &__add-charm {
+    background-image: url('/images/add_some_charm_bg.png'); /* Replace with actual image path */
+  }
+
+  &__build-story {
+    background-image: url('/images/build_your_charm_story_bg.png'); /* Replace with actual image path */
+  }
+
+  > .container h1 {
+    display: none;
+  }
+}

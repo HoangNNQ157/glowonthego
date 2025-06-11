@@ -1,0 +1,117 @@
+.review-qr-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 20px;
+    box-sizing: border-box;
+
+    .review-qr-container {
+        background-color: #fff;
+        padding: 200px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        text-align: center;
+
+        .review-qr-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .review-qr-product-info {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .review-qr-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .rating-section {
+                font-size: 2.5em;
+                color: #ccc;
+                cursor: pointer;
+
+                .star {
+                    transition: color 0.2s;
+
+                    &.filled {
+                        color: #ffc107;
+                    }
+
+                    &:hover {
+                        color: #ffdb58;
+                    }
+                }
+            }
+
+            .form-group {
+                text-align: left;
+
+                label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: bold;
+                    color: #555;
+                }
+
+                textarea {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 1em;
+                    resize: vertical;
+                    min-height: 80px;
+                    box-sizing: border-box; // Include padding and border in the element's total width and height
+
+                    &:focus {
+                        outline: none;
+                        border-color: #007bff;
+                        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+                    }
+                }
+            }
+
+            .submit-button {
+                background-color: #007bff;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 5px;
+                font-size: 1.1em;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+
+                &:disabled {
+                    background-color: #cccccc;
+                    cursor: not-allowed;
+                }
+            }
+        }
+
+        .music-button {
+            background-color: black;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #333;
+            }
+        }
+    }
+} 

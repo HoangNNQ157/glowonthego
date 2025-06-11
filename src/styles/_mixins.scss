@@ -1,0 +1,83 @@
+@use "sass:color";
+
+// Media queries
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  }
+  @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  }
+  @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  }
+  @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  }
+}
+
+// Flexbox
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+// Grid
+@mixin grid($columns: 1, $gap: 1rem) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Typography
+@mixin heading($size: 1.5rem, $weight: 600, $line-height: 1.2) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+}
+
+// Transitions
+@mixin transition($property: all, $duration: 0.2s, $timing: ease-in-out) {
+  transition: $property $duration $timing;
+}
+
+// Buttons
+@mixin button($bg-color: $primary-color, $text-color: white, $hover-bg: color.adjust($bg-color, $lightness: -10%)) {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: $bg-color;
+  color: $text-color;
+  border: none;
+  border-radius: $border-radius-md;
+  font-weight: 500;
+  cursor: pointer;
+  @include transition;
+  
+  &:hover {
+    background-color: $hover-bg;
+  }
+}
+
+// Shadows
+@mixin shadow($level: md) {
+  @if $level == sm {
+    box-shadow: $shadow-sm;
+  }
+  @else if $level == md {
+    box-shadow: $shadow-md;
+  }
+  @else if $level == lg {
+    box-shadow: $shadow-lg;
+  }
+}
+
+// Container
+@mixin container($max-width: 1200px) {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-4;
+} 

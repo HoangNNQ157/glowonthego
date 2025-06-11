@@ -1,0 +1,212 @@
+@use '../../styles/variables' as *;
+@use "sass:color";
+
+.footer {
+  background-color: #f7f6f0; /* Adjusted background color based on image */
+  color: #222; /* Default text color */
+  padding: 0; /* Remove padding from main footer */
+  
+  .container {
+    max-width: 1200px; /* Adjust max-width as needed */
+    margin: 0 auto; /* Center the container */
+    padding: 0 1rem; /* Add horizontal padding */
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: black; /* Adjusted to a brighter blue based on image and plugin data */
+    width: calc(100% - 80px); /* Full width minus padding/margins */
+    margin: 0 auto; /* Center the divider */
+  }
+  
+  &__top {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: space-between; /* Space out sections */
+    padding: 60px 0; /* Vertical padding based on visual approximation */
+    gap: 40px; /* Gap between main sections */
+  }
+
+  &__subscribe {
+    flex-basis: 400px; /* Adjusted base width */
+    flex-grow: 1; /* Allow it to grow */
+    margin-right: 40px; /* Add space to the right */
+margin-bottom: 40px;
+    @media (max-width: 1024px) {
+      flex-basis: 100%; /* Full width on smaller screens */
+      margin-right: 0;
+      margin-bottom: 40px; /* Add bottom margin when stacked */
+    }
+  }
+  
+  &__subscribe-form-container {
+    background-color: black; /* Adjusted to the exact purple from plugin */
+    border-radius: 115px; /* Highly rounded corners */
+    padding: 12px 20px; /* Adjust padding */
+    display: flex;
+    align-items: center;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4); /* White border with opacity */
+  }
+
+  &__subscribe-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 15px; /* Space between icon and text */
+    svg {
+      width: 24px;
+      height: 24px;
+      // stroke: #4f46e5; /* Adjusted stroke color to match text/arrow color from plugin */
+    }
+  }
+  &__content {
+    padding: 0px 40px;
+  }
+  &__subscribe-text {
+    font-size: 1rem;
+    // color: #554d9b; /* Adjusted to dark purple/blue from plugin */
+    margin-right: 20px; /* Space between text and form */
+  }
+
+  &__subscribe-form {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; /* Allow form to take remaining space */
+  }
+
+  &__subscribe-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    flex-grow: 1;
+    padding: 0 10px; /* Adjust padding */
+    font-size: 1rem;
+    // color: #4f46e5; /* Purple text color */
+    &::placeholder {
+      color: white; /* Adjusted to dark purple/blue from plugin */
+    }
+  }
+
+  &__subscribe-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    svg {
+      width: 20px;
+      height: 20px;
+      stroke: white; /* Adjusted stroke color to match text/arrow color from plugin */
+    }
+  }
+
+  &__app-download {
+    margin-right: 40px; /* Space between app download and navigation */
+    @media (max-width: 1024px) {
+      margin-right: 0;
+      margin-bottom: 40px;
+    }
+  }
+  
+  &__app-title {
+    font-size: 0.9rem; /* Adjusted font size */
+    font-weight: 700;
+    color: #fa7697; /* Adjusted to pink color from plugin */
+    margin-bottom: 1rem; /* Space below title */
+  }
+
+  &__app-links {
+    display: flex;
+    gap: 1rem; /* Space between app icons */
+    img {
+      height: 40px; /* Adjusted icon height */
+    }
+  }
+
+  &__nav {
+    display: flex;
+    gap: 40px; /* Space between navigation columns */
+    
+    @media (max-width: 768px) {
+      flex-direction: column; /* Stack columns on smaller screens */
+      gap: 20px;
+    }
+  }
+
+  &__nav-column {
+    flex-basis: 150px; /* Adjusted column width */
+    flex-grow: 1; /* Allow columns to grow */
+  }
+
+  &__nav-title {
+    font-size: 1rem; /* Adjusted title font size */
+    font-weight: 700;
+    color: black; /* Adjusted to blue color from plugin */
+    margin-bottom: 1rem; /* Space below title */
+  }
+
+  &__nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__nav-link {
+    color: #222; /* Dark text color */
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem; /* Space between links */
+    display: block; /* Make links block elements for margin */
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid #dbb2c4; /* Adjusted to pinkish border color from plugin */
+    padding: 20px 0; /* Vertical padding */
+    display: flex;
+    justify-content: space-between; /* Space out bottom sections */
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 1rem; /* Gap when wrapped */
+  }
+
+  &__bottom-nav {
+    display: flex;
+    gap: 20px; /* Space between bottom links */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap; /* Allow wrapping */
+    &-1 {
+      gap: 50px;    
+      display: flex;
+    }
+    &-2 {
+          display: flex;
+      gap: 50px;
+    }
+  }
+
+  &__bottom-link {
+    color: #222; /* Dark text color */
+    text-decoration: none;
+    font-size: 0.85rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &--highlight {
+      color: black; /* Pink highlight color */
+      font-weight: 700;
+    }
+  }
+
+  &__copyright {
+    font-size: 0.85rem;
+    color: #222; /* Dark text color */
+  }
+} 

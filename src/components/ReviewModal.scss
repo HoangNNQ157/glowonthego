@@ -1,0 +1,155 @@
+.review-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.review-modal__content {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  animation: fadeInScale 0.3s ease-out;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.review-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  .review-modal__close-button {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #888;
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+.review-modal__product-info {
+  margin-bottom: 20px;
+  p {
+    font-size: 1rem;
+    color: #555;
+    strong {
+      font-weight: 600;
+      color: #333;
+    }
+  }
+}
+
+.review-modal__form {
+  .form-group {
+    margin-bottom: 15px;
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+  .form-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    min-height: 80px;
+    resize: vertical;
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+  }
+}
+
+.star-rating {
+  display: flex;
+  font-size: 1.8rem;
+  color: #ccc; /* Default star color */
+
+  .star {
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &.filled {
+      color: #ffc107; /* Filled star color (yellow) */
+    }
+
+    &:hover {
+      color: #ffc107; /* Highlight on hover */
+    }
+  }
+}
+
+.review-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+
+  .submit-review-btn,
+  .cancel-review-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .submit-review-btn {
+    background-color: #007bff;
+    color: #fff;
+    &:hover {
+      background-color: #0056b3;
+    }
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .cancel-review-btn {
+    background-color: #e0e0e0;
+    color: #333;
+    &:hover {
+      background-color: #c0c0c0;
+    }
+  }
+} 

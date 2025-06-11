@@ -1,0 +1,156 @@
+@use "sass:color";
+@use '../../styles/variables' as *;
+
+.header {
+  // position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-index-sticky;
+  background-color: #FFF8F0;
+  padding: 37px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
+
+  &.header--hidden {
+    transform: translateY(-100%);
+  }
+
+  &.header--visible {
+    transform: translateY(0);
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  &__menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    @media (max-width: $breakpoint-md) {
+      display: block;
+    }
+  }
+
+  &__menu-icon {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: $text-color;
+    position: relative;
+    transition: background-color 0.3s;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background-color: $text-color;
+      transition: transform 0.3s;
+    }
+
+    &::before {
+      top: -8px;
+    }
+
+    &::after {
+      bottom: -8px;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    &--primary {
+      margin-right: auto;
+    }
+
+    &--secondary {
+      margin-left: auto;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      display: none;
+    }
+  }
+
+  &__nav-list {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__nav-link {
+    color: $text-color;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  &__logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    width: 212px;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__icon {
+    color: $text-color;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $primary-color;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+@keyframes headerDropDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

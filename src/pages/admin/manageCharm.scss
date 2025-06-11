@@ -1,0 +1,284 @@
+.manage-charm-container {
+    padding: 20px;
+
+    h1 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .manage-charm__header {
+        display: flex; /* Arrange search area and add button side by side */
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 20px;
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        gap: 10px; /* Space between search area and button */
+
+        .manage-charm__search {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between search rows */
+            margin-bottom: 10px; /* Space below search inputs before button */
+            flex-grow: 1; /* Allow search area to take up available space */
+            margin-right: 20px; /* Space between search and buttons */
+            max-width: 700px; /* Example max-width */
+
+            .search-row {
+                display: flex;
+                gap: 10px; /* Space between inputs in a row */
+                width: 100%;
+
+                input {
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    flex-grow: 1; /* Allow inputs to grow */
+                }
+                /* Adjust input widths if needed */
+                 input[name="charmName"] {
+                    flex-basis: 35%; /* Example width */
+                }
+                 input[name="minPrice"], input[name="maxPrice"], input[name="charmCategoryId"] {
+                    flex-basis: 20%; /* Example width */
+                }
+            }
+        }
+
+        .search-button { /* Style for the search button */
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            height: fit-content; /* Adjust height to fit content */
+            margin-bottom: 10px; /* Align with the bottom of the search inputs area */
+
+            &:hover {
+                background-color: #0056b3;
+            }
+             &:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+        }
+
+        .add-charm-button {
+            padding: 10px 15px;
+            background-color: #28a745; /* Green color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #218838;
+            }
+             &:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .charm-list-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+         .status {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+
+            &.active {
+                background-color: #d4edda;
+                color: #155724;
+            }
+
+            &.inactive {
+                background-color: #f8d7da;
+                color: #721c24;
+            }
+        }
+
+        td {
+            .action-buttons {
+                display: flex;
+                gap: 5px;
+
+                .action-btn {
+                    padding: 5px 10px;
+                    border: none;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    font-size: 12px; /* Adjusted to be slightly smaller for a compact look */
+                    transition: background-color 0.3s ease;
+                    color: white; /* Default text color for all action buttons */
+                    min-width: 60px; /* Ensure consistent width */
+                    text-align: center;
+
+                    &.view-details {
+                        background-color: #6c757d; // Grey
+
+                        &:hover {
+                            background-color: #5a6268;
+                        }
+                    }
+
+                    &.edit {
+                        background-color: #007bff; // Blue
+
+                        &:hover {
+                            background-color: #0056b3;
+                        }
+                    }
+
+                    &.delete {
+                        background-color: #dc3545; // Red
+
+                        &:hover {
+                            background-color: #c82333;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /* Pagination styles */
+    .charm-list__pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        gap: 10px; /* Space between pagination elements */
+
+        button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+
+            &:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+        }
+
+        span {
+            font-size: 14px;
+            color: #333;
+        }
+    }
+
+    .loading, .error, .no-data {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+    }
+
+    .error {
+        color: #f44336;
+    }
+
+    /* Styles for Confirmation Dialog */
+    .confirmation-dialog-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000; /* Ensure it's on top */
+    }
+
+    .confirmation-dialog {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        text-align: center;
+        max-width: 400px; /* Limit dialog width */
+        width: 90%; /* Make it responsive */
+
+        p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .dialog-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* Space between buttons */
+
+            button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s ease;
+
+                &.confirm-btn {
+                    background-color: #dc3545; /* Red for delete */
+                    color: white;
+
+                    &:hover {
+                        background-color: #c82333;
+                    }
+                }
+
+                &.cancel-btn {
+                    background-color: #6c757d; /* Gray for cancel */
+                    color: white;
+
+                    &:hover {
+                        background-color: #5a6268;
+                    }
+                }
+
+                &:disabled {
+                    background-color: #cccccc;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+} 
