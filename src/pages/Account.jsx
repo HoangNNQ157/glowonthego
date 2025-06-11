@@ -30,7 +30,7 @@ const Account = () => {
       console.log('Current User from AuthService:', currentUser);
 
       if (!currentUser) {
-        navigate('/register');
+        navigate('/login');
         return;
       }
       
