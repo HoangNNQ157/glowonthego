@@ -67,7 +67,7 @@ const Login = () => {
           <div className="login-signup-text">
             Don't have an account? <a href="/account">Sign up</a>
           </div>
-          {/* <div className="login-social-buttons">
+          <div className="login-social-buttons">
             <button className="login-social-button login-facebook">
               <div className="login-social-icon">
                 <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +100,7 @@ const Login = () => {
               </div>
               Sign in with Google
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
