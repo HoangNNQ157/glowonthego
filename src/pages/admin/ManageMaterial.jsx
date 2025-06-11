@@ -86,13 +86,13 @@ const ManageMaterial = () => {
 
   return (
     <div className="manage-material-container">
-      <h1>Quản lý Material</h1>
+      <h1>Material List</h1>
       <div className="material-header">
         <div className="search-row">
           <input name="name" value={search.name} onChange={handleSearchChange} placeholder="Tên material" />
           <input name="desc" value={search.desc} onChange={handleSearchChange} placeholder="Mô tả" />
         </div>
-        <button className="add-btn" onClick={()=>openModal()}>Thêm mới</button>
+        <button className="add-btn" onClick={()=>openModal()}>Add New</button>
       </div>
       {loading ? <div>Đang tải...</div> : (
         <table>

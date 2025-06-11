@@ -133,7 +133,7 @@ function ManageCharm() {
 
   return (
     <div className="manage-charm-container">
-      <h1>Danh sách Charm</h1>
+      <h1>Charm List</h1>
 
       {/* Search and Add Button Section */}
       <div className="manage-charm__header">
@@ -174,11 +174,11 @@ function ManageCharm() {
 
            {/* Search Button */}
            <button className="search-button" onClick={handleSearchClick} disabled={loading}>
-               Tìm kiếm
+               Search
            </button>
 
            {/* Add Charm Button - Implement navigation */}
-           <button className="add-charm-button" onClick={() => navigate('/admin/add-charm')}>Thêm Charm mới</button>
+           <button className="add-charm-button" onClick={() => navigate('/admin/add-charm')}>Add new charm</button>
       </div>
 
       {/* Basic Table to display charms - Customize as needed */}

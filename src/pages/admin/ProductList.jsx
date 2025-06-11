@@ -146,7 +146,7 @@ const ProductList = () => {
     return (
         <div className="product-list">
             <div className="product-list__header">
-                <h1>Danh sách sản phẩm</h1>
+                <h1>Products List</h1>
                 <div className="product-list__search">
                     <div className="search-row">
                         <input
@@ -171,7 +171,7 @@ const ProductList = () => {
                             onChange={handleSearchInputChange}
                         />
                     </div>
-                    <div className="search-row">
+                    {/* <div className="search-row">
                          <input
                             type="number"
                             name="materialId"
@@ -186,7 +186,7 @@ const ProductList = () => {
                             value={searchParams.themeId}
                             onChange={handleSearchInputChange}
                         />
-                    </div>
+                    </div> */}
                 </div>
                 <button className="search-button" onClick={handleSearch} disabled={loading}>
                     Tìm kiếm
