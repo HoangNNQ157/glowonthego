@@ -184,9 +184,9 @@ const Home = () => {
             <img src="/images/bg_pink.png" alt="Your Story" />
           </div>
           <div className="home__your-story-text">
-            <h2 className="home__your-story-title">Your Bracelet, Your Story, Your Moment.</h2>
+            <h2 className="home__your-story-title">Your Bracelet Your Story Your Moment.</h2>
             <p className="home__your-story-description">A message can be a reminder, encouragement, or simply a pleasant surprise for customer.</p>
-            <button className="home__your-story-button">LEARN MORE ABOUT US</button>
+            {/* <button className="home__your-story-button">LEARN MORE ABOUT US</button> */}
           </div>
         </div>
       </section>
@@ -208,7 +208,7 @@ const Home = () => {
               <button className="home__categories-button">SHOP NOW</button>
             </div>
           </Link>
-          <Link to="/charm" className="home__categories-card">
+          <Link to="/custom#custom__products-section" className="home__categories-card">
             <img src="/images/bg__3.png" alt="Charms" className="home__categories-image" />
             <div className="home__categories-info">
               <h3 className="home__categories-title">Charms</h3>
@@ -259,7 +259,7 @@ const Home = () => {
                 <p className="home__how-it-works-card-description">Giving a personalized bracelet is a thoughtful way to celebrate special moments.</p>
               </div>
             </div>
-            <button className="home__how-it-works-learn-more-button">Learn More</button>
+            {/* <button className="home__how-it-works-learn-more-button">Learn More</button> */}
           </div>
         </div>
       </section>
@@ -309,7 +309,7 @@ const Home = () => {
           <div className="home__visit-store-card">
             <h3 className="home__visit-store-title">Visit a Glow on<br />the flow<br />store near you!</h3>
             <p className="home__visit-store-description">Get to know where our stores are located!</p>
-            <button className="home__visit-store-button">OUR STORES</button>
+            {/* <button className="home__visit-store-button">OUR STORES</button> */}
           </div>
         </div>
       </section>

@@ -13,10 +13,10 @@ const Navbar = () => {
     { name: 'CHARMS', href: '/charm' },
   ];
 
-  const secondaryNav = [
-    { name: 'THE BEAD BAR EXPERIENCE', href: '/experience' },
-    { name: 'DISCOVER', href: '/discover' },
-  ];
+  // const secondaryNav = [
+  //   { name: 'THE BEAD BAR EXPERIENCE', href: '/experience' },
+  //   { name: 'DISCOVER', href: '/discover' },
+  // ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,7 +79,7 @@ const Navbar = () => {
 
           {/* Secondary Navigation */}
           <nav className="header__nav header__nav--secondary">
-            <ul className="header__nav-list">
+            {/* <ul className="header__nav-list">
               {secondaryNav.map((item) => (
                 <li key={item.name}>
                   <Link to={item.href} className="header__nav-link">
@@ -87,7 +87,7 @@ const Navbar = () => {
                   </Link>
                 </li>
               ))}
-            </ul>
+            </ul> */}
             <div className="header__icons">
               <Link to="/search" className="header__icon">
                 <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
