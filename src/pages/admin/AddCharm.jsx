@@ -15,6 +15,7 @@ const AddCharm = () => {
     price: 0,
     description: '',
     charmCategoryId: '',
+    qrMessage: '',
     // Add other fields like color, size, quantity, image, isActive based on your API
     color: '',
     size: '',
@@ -55,14 +56,14 @@ const AddCharm = () => {
     setLoading(true);
 
     try {
-        // Convert numeric strings to numbers if necessary
-        const dataToSend = {
-            ...charmData,
-            price: parseFloat(charmData.price), // Convert price to number
-            charmCategoryId: parseInt(charmData.charmCategoryId), // Convert charmCategoryId to integer
-            quantity: parseInt(charmData.quantity), // Convert quantity to integer
-        };
-        
+      // Convert numeric strings to numbers if necessary
+      const dataToSend = {
+        ...charmData,
+        price: parseFloat(charmData.price), // Convert price to number
+        charmCategoryId: parseInt(charmData.charmCategoryId), // Convert charmCategoryId to integer
+        quantity: parseInt(charmData.quantity), // Convert quantity to integer
+      };
+
       await CharmService.createCharm(dataToSend);
       toast.success('Thêm Charm thành công!');
       navigate('/admin/manage-charm'); // Navigate back to charm list after adding
@@ -76,111 +77,122 @@ const AddCharm = () => {
   return (
     <div className="add-charm-container">
       <h1>Thêm Charm mới</h1>
-      
-      <form onSubmit={handleSubmit}>
-         <div>
-            <label htmlFor="charmName">Tên Charm:</label>
-            <input 
-              type="text" 
-              id="charmName" 
-              name="charmName"
-              value={charmData.charmName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="price">Giá:</label>
-            <input 
-              type="number" 
-              id="price" 
-              name="price"
-              value={charmData.price}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="description">Mô tả:</label>
-            <textarea 
-                id="description" 
-                name="description"
-                value={charmData.description}
-                onChange={handleInputChange}
-            ></textarea>
-          </div>
-           <div>
-            <label htmlFor="charmCategoryId">Danh mục Charm:</label>
-            <select
-              id="charmCategoryId"
-              name="charmCategoryId"
-              value={charmData.charmCategoryId}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Chọn danh mục</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.categoryName}
-                </option>
-              ))}
-            </select>
-          </div>
-           <div>
-            <label htmlFor="color">Màu sắc:</label>
-            <input 
-              type="text" 
-              id="color" 
-              name="color"
-              value={charmData.color}
-              onChange={handleInputChange}
-            />
-          </div>
-           <div>
-            <label htmlFor="size">Kích thước:</label>
-            <input 
-              type="text" 
-              id="size" 
-              name="size"
-              value={charmData.size}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="quantity">Số lượng:</label>
-            <input 
-              type="number" 
-              id="quantity" 
-              name="quantity"
-              value={charmData.quantity}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-           <div>
-            <label htmlFor="image">URL Hình ảnh:</label>
-            <input 
-              type="text" 
-              id="image" 
-              name="image"
-              value={charmData.image}
-              onChange={handleInputChange}
-            />
-          </div>
-           <div>
-              <label htmlFor="isActive">Kích hoạt:</label>
-              <input 
-                  type="checkbox" 
-                  id="isActive" 
-                  name="isActive"
-                  checked={charmData.isActive}
-                  onChange={handleInputChange}
-              />
-          </div>
 
-          <button type="submit" disabled={loading}>
-             {loading ? 'Đang thêm...' : 'THÊM CHARM'}
-          </button>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="charmName">Tên Charm:</label>
+          <input
+            type="text"
+            id="charmName"
+            name="charmName"
+            value={charmData.charmName}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="price">Giá:</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            value={charmData.price}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="description">Mô tả:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={charmData.description}
+            onChange={handleInputChange}
+          ></textarea>
+        </div>
+        <div>
+          <label htmlFor="qrMessage">Thông Điệp</label>
+          <input
+            type="text"
+            id="qrMessage"
+            name="qrMessage" 
+            value={charmData.qrMessage}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="charmCategoryId">Danh mục Charm:</label>
+          <select
+            id="charmCategoryId"
+            name="charmCategoryId"
+            value={charmData.charmCategoryId}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Chọn danh mục</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.categoryName}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="color">Màu sắc:</label>
+          <input
+            type="text"
+            id="color"
+            name="color"
+            value={charmData.color}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="size">Kích thước:</label>
+          <input
+            type="text"
+            id="size"
+            name="size"
+            value={charmData.size}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="quantity">Số lượng:</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            value={charmData.quantity}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="image">URL Hình ảnh:</label>
+          <input
+            type="text"
+            id="image"
+            name="image"
+            value={charmData.image}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="isActive">Kích hoạt:</label>
+          <input
+            type="checkbox"
+            id="isActive"
+            name="isActive"
+            checked={charmData.isActive}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Đang thêm...' : 'THÊM CHARM'}
+        </button>
       </form>
     </div>
   );

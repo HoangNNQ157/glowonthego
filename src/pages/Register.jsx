@@ -23,26 +23,40 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      await AuthService.register(
-        formData.userName,
-        formData.email,
-        formData.password,
-        formData.fullname,
-        formData.phoneNumber
-      );
-      toast.success('Đăng ký thành công!');
-      navigate('/login');
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Đăng ký thất bại');
-    } finally {
-      setLoading(false);
+  try {
+    // Gửi yêu cầu đăng ký
+    await AuthService.register(
+      formData.userName,
+      formData.email,
+      formData.password,
+      formData.fullname,
+      formData.phoneNumber
+    );
+    
+    // Nếu đăng ký thành công
+    toast.success('Đăng ký thành công!');
+    navigate('/login');
+  } catch (error) {
+    setLoading(false);
+
+    // Kiểm tra nếu có response từ BE
+    if (error.response) {
+      // Lấy thông báo lỗi từ response body
+      const errorMessage = error.response.data || 'Đăng ký thất bại';  // Trả ra tất cả thông báo từ BE
+
+      // Hiển thị thông báo lỗi cho người dùng
+      toast.error(errorMessage);  // Sử dụng toast để hiển thị lỗi
+    } else {
+      // Nếu không có response (ví dụ lỗi mạng)
+      toast.error('Không thể kết nối đến server. Vui lòng thử lại.');
     }
-  };
+  }
+};
+
 
   return (
     <div className="login-page">

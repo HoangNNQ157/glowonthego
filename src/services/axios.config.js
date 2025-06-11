@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with default configuration
 const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://glowonthego2-cvcabzcsdydrg8em.southeastasia-01.azurewebsites.net/swagger/index.html',
+    baseURL: import.meta.env.VITE_API_URL || 'https://glowonthego2-cvcabzcsdydrg8em.southeastasia-01.azurewebsites.net/api',
     timeout: 10000,
     headers: {
         // Removed default Content-Type and Accept headers

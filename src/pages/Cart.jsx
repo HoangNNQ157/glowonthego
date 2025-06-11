@@ -258,7 +258,7 @@ export default function Cart() {
         </div>
       </div>
       <div className="cart-footer">
-        <button className="cart-checkout-btn" onClick={() => navigate('/checkout')} disabled={cartItems.length === 0}>Đặt Hàng</button>
+        <button className="cart-checkout-btn" onClick={() => navigate('/checkout')} disabled={cartItems.length === 0}>Place Order</button>
       </div>
     </div>
   );

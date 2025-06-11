@@ -61,7 +61,7 @@ const Charm = () => {
         <div className="container charm__selection-container">
           <div className="charm__large-image">
             <img src="/images/charm__large.png" alt="Choose Your Charms" />
-            <div className="charm__large-image-text">ChooseYour Charms</div>
+            <div className="charm__large-image-text">Choose Your Charms</div>
           </div>
           <div className="charm__small-charms">
             <div className="charm__small-charms-grid">
@@ -82,7 +82,7 @@ const Charm = () => {
                 ))
               )}
             </div>
-            <Link to="/custom#custom__radio-image-section">
+            <Link to="/custom#custom__products-section">
               <button className="charm__shop-all-button">SHOP ALL CHARMS</button>
             </Link>
           </div>
@@ -95,7 +95,7 @@ const Charm = () => {
           <div className="charm__add-charm-content">
             <h2>Add Some Charm</h2>
             <p>to customize your Glow™</p>
-            <button className="charm__add-charm-button">CUSTOMIZE</button>
+            {/* <button className="charm__add-charm-button">CUSTOMIZE</button> */}
           </div>
         </section>
 
@@ -103,7 +103,7 @@ const Charm = () => {
         <section className="charm__build-story">
           <div className="charm__build-story-content">
             <h2>Build Your Charm Story</h2>
-            <button className="charm__build-story-button">BUILD YOURS HERE</button>
+            {/* <button className="charm__build-story-button">BUILD YOURS HERE</button> */}
           </div>
         </section>
       </div>

@@ -249,13 +249,13 @@ const Custom = () => {
           <div className="filter-popup__overlay" onClick={toggleFilterPopup}></div>
           <div className="filter-popup__content">
             <div className="filter-popup__header">
-              <h2>Bộ lọc Charm</h2>
+              <h2>Charm Filter</h2>
               <button className="filter-popup__close" onClick={toggleFilterPopup}>×</button>
             </div>
 
             <div className="filter-popup__body">
               <div className="filter-group">
-                <label htmlFor="tempCategory">Danh mục</label>
+                <label htmlFor="tempCategory">Category</label>
                 <select
                   id="tempCategory"
                   name="category"
@@ -272,7 +272,7 @@ const Custom = () => {
               </div>
 
               <div className="filter-group">
-                <label htmlFor="tempColor">Màu sắc</label>
+                <label htmlFor="tempColor">Color</label>
                 <input
                   type="text"
                   id="tempColor"
@@ -284,7 +284,7 @@ const Custom = () => {
               </div>
 
               <div className="filter-group price-range">
-                <label>Giá</label>
+                <label>Price</label>
                 <input
                   type="number"
                   name="minPrice"
@@ -303,7 +303,7 @@ const Custom = () => {
               </div>
 
               <div className="filter-group">
-                <label htmlFor="tempSortBy">Sắp xếp theo</label>
+                <label htmlFor="tempSortBy">Sort by</label>
                 <select
                   id="tempSortBy"
                   name="sortBy"
@@ -350,7 +350,7 @@ const Custom = () => {
       <section className="custom__radio-image-section">
         {/* GIF Upload Section - Now main content of radio-image-section */}
         <div className="container custom__gif-upload-content-wrapper"> {/* Add a wrapper for centering */} 
-          <h2>Tải lên File Tùy chỉnh của bạn</h2>
+          <h2>Upload Your Custom File</h2>
           <div className="custom__upload-area">
             <input
               type="file"
@@ -360,20 +360,20 @@ const Custom = () => {
               className="custom__upload-input"
             />
             <label htmlFor="gifUploadInput" className="custom__upload-label">
-              {selectedFile ? selectedFile.name : 'Chọn file GIF/Ảnh...'}
+              {selectedFile ? selectedFile.name : 'Select GIF/Image File...'}
             </label>
             <button
               onClick={handleUploadFile}
               disabled={!selectedFile || uploading}
               className="custom__upload-button"
             >
-              {uploading ? 'Đang tải lên...' : 'Tải lên File'}
+              {uploading ? 'Uploading...' : 'Upload File'}
             </button>
           </div>
           {uploadError && <p className="custom__upload-error">{uploadError}</p>}
           {uploadedGifUrl && (
             <div className="custom__uploaded-gif-preview">
-              <p>File đã tải lên:</p>
+              <p>File Uploaded:</p>
               <img src={uploadedGifUrl} alt="Uploaded File" />
             </div>
           )}
@@ -426,7 +426,7 @@ const Custom = () => {
       <section className="custom__you-may-also-like-section">
         <div className="container">
           <div className="custom__viewed-products-info">
-            You've Viewed 48 of 52 Products
+            
           </div>
           <div className="custom__load-more">
             <button className="custom__load-more-button">LOAD MORE</button>

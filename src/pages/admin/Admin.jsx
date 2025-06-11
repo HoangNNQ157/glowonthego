@@ -32,7 +32,7 @@ const Admin = () => {
                     <path fillRule="evenodd" clipRule="evenodd" d="M29.4197 22.9343H35.186C36.0603 22.9343 36.7473 22.2259 36.7473 21.3716C36.7473 20.4965 36.0603 19.809 35.186 19.809H29.4197C28.5454 19.809 27.8584 20.4965 27.8584 21.3716C27.8584 22.2259 28.5454 22.9343 29.4197 22.9343ZM42.0349 12.1019C43.3047 12.1019 44.1374 12.5395 44.9701 13.4979C45.8028 14.4563 45.9485 15.8315 45.7611 17.0795L43.7835 30.7475C43.4088 33.3749 41.1605 35.3105 38.5168 35.3105H15.8053C13.0366 35.3105 10.7467 33.1874 10.5178 30.4371L8.60258 7.72443L5.4592 7.18271C4.62651 7.03686 4.04363 6.22428 4.18935 5.39086C4.33507 4.5387 5.14694 3.97406 6.00044 4.10115L10.9653 4.84914C11.6731 4.97624 12.1935 5.55755 12.256 6.26595L12.6515 10.9331C12.714 11.6019 13.2552 12.1019 13.9214 12.1019H42.0349ZM15.4718 38.6035C13.7232 38.6035 12.3076 40.0203 12.3076 41.7705C12.3076 43.4998 13.7232 44.9166 15.4718 44.9166C17.1996 44.9166 18.6152 43.4998 18.6152 41.7705C18.6152 40.0203 17.1996 38.6035 15.4718 38.6035ZM38.8911 38.6035C37.1424 38.6035 35.7269 40.0203 35.7269 41.7705C35.7269 43.4998 37.1424 44.9166 38.8911 44.9166C40.6189 44.9166 42.0344 43.4998 42.0344 41.7705C42.0344 40.0203 40.6189 38.6035 38.8911 38.6035Z" fill="#A6ABC8" />
                   </svg>
                 </span>
-                <span className="admin-nav-label">Product</span>
+                <span className="admin-nav-label">Bracelet</span>
               </Link>
             </li>
             <li className="admin-nav-item">
@@ -42,7 +42,7 @@ const Admin = () => {
                     <path fillRule="evenodd" clipRule="evenodd" d="M16.9217 3.75H35.0805C41.7733 3.75 45.5 7.0875 45.5 12.8062V32.175C45.5 37.9875 41.7733 41.25 35.0805 41.25H16.9217C10.335 41.25 6.5 37.9875 6.5 32.175V12.8062C6.5 7.0875 10.335 3.75 16.9217 3.75ZM17.507 12.4875V12.4688H23.9831C24.917 12.4688 25.6753 13.125 25.6753 13.9294C25.6753 14.7563 24.917 15.4125 23.9831 15.4125H17.507C16.5731 15.4125 15.817 14.7563 15.817 13.95C15.817 13.1438 16.5731 12.4875 17.507 12.4875ZM17.507 23.8875H34.4936C35.4253 23.8875 36.1836 23.2312 36.1836 22.425C36.1836 21.6187 35.4253 20.9606 34.4936 20.9606H17.507C16.5731 20.9606 15.817 21.6187 15.817 22.425C15.817 23.2312 16.5731 23.8875 17.507 23.8875ZM17.5067 32.4563H34.4934C35.3579 32.3813 36.0101 31.7419 36.0101 30.9938C36.0101 30.225 35.3579 29.5875 34.4934 29.5125H17.5067C16.8567 29.4562 16.2284 29.7188 15.8817 30.2063C15.5351 30.675 15.5351 31.2938 15.8817 31.7813C16.2284 32.25 16.8567 32.5313 17.5067 32.4563Z" fill="#A6ABC8" />
                   </svg>
                 </span>
-                <span className="admin-nav-label">Manage Charm</span>
+                <span className="admin-nav-label">Charm</span>
               </Link>
             </li>
             <li className="admin-nav-item">
@@ -52,7 +52,7 @@ const Admin = () => {
                     <path fillRule="evenodd" clipRule="evenodd" d="M4.33301 23.5294C4.33301 13.2131 13.4547 3.91669 26.043 3.91669C38.3497 3.91669 47.6663 13.0366 47.6663 23.4706C47.6663 35.5717 36.7463 43.0834 25.9997 43.0834C22.4463 43.0834 18.503 42.2204 15.3397 40.5337C14.2347 39.9257 13.303 39.4746 12.1113 39.8276L7.73467 41.0044C6.62967 41.3182 5.63301 40.5337 5.95801 39.4746L7.40967 35.0814C7.64801 34.4734 7.60467 33.8261 7.25801 33.3162C5.39467 30.2174 4.33301 26.8244 4.33301 23.5294ZM23.1828 23.5294C23.1828 24.922 24.4178 26.0399 25.9561 26.0595C27.4944 26.0595 28.7294 24.922 28.7294 23.5491C28.7294 22.1566 27.4944 21.0386 25.9561 21.0386C24.4394 21.019 23.1828 22.1566 23.1828 23.5294ZM33.1712 23.5491C33.1712 24.922 34.4062 26.0595 35.9446 26.0595C37.4829 26.0595 38.7179 24.922 38.7179 23.5491C38.7179 22.1566 37.4829 21.0386 35.9446 21.0386C34.4062 21.0386 33.1712 22.1566 33.1712 23.5491C33.1712 24.922 17.5066 26.0399 15.9682 26.0595Z" fill="#A6ABC8" />
                   </svg>
                 </span>
-                <span className="admin-nav-label">Customer Review</span>
+                <span className="admin-nav-label">Review</span>
               </Link>
             </li>
             <li className="admin-nav-item">
@@ -63,40 +63,40 @@ const Admin = () => {
                     <path d="M21.5059 1.47168C21.5621 1.50082 21.6269 1.54045 21.7139 1.5957L22.0537 1.81738L41.209 14.5361V34.9268C41.209 35.2076 41.2078 35.3513 41.1982 35.4531C41.1981 35.4545 41.1974 35.4557 41.1973 35.457C41.196 35.4581 41.1948 35.4598 41.1934 35.4609C41.1537 35.4929 41.1046 35.529 41.0361 35.5762L40.7617 35.7607L21.5 48.5488L2.23926 35.7607C2.00528 35.6054 1.88621 35.5252 1.80664 35.4609C1.80517 35.4598 1.80411 35.4582 1.80273 35.457C1.80261 35.4558 1.80286 35.4544 1.80273 35.4531C1.79322 35.3513 1.79199 35.2076 1.79199 35.9268V14.5352L20.9473 1.81738C21.2333 1.62744 21.3825 1.53003 21.4951 1.47168C21.4968 1.4708 21.4984 1.46958 21.5 1.46875C21.5018 1.46966 21.504 1.4707 21.5059 1.47168Z" stroke="white" strokeOpacity="0.3" strokeWidth="2" strokeLinejoin="round" />
                   </svg>
                 </span>
-                <span className="admin-nav-label">Product stock</span>
+                <span className="admin-nav-label">Stock</span>
               </Link>
             </li>
           </ul>
-          <div className="admin-nav-others-label">QUẢN LÝ KHÁC</div>
+          <div className="admin-nav-others-label">Other Management</div>
           <ul className="admin-nav-list admin-nav-list-others">
             <li className="admin-nav-item">
               <Link to="/admin/manage-charm-category">
                 <span className="admin-nav-icon">🏷️</span>
-                <span className="admin-nav-label">Quản lý Category</span>
+                <span className="admin-nav-label">Category</span>
               </Link>
             </li>
             <li className="admin-nav-item">
               <Link to="/admin/manage-material">
                 <span className="admin-nav-icon">🧱</span>
-                <span className="admin-nav-label">Quản lý Material</span>
+                <span className="admin-nav-label">Material</span>
               </Link>
             </li>
             <li className="admin-nav-item">
               <Link to="/admin/manage-theme">
                 <span className="admin-nav-icon">🎨</span>
-                <span className="admin-nav-label">Quản lý Theme</span>
+                <span className="admin-nav-label">Theme</span>
               </Link>
             </li>
             <li className="admin-nav-item">
               <Link to="/admin/view-gifs">
                 <span className="admin-nav-icon">🖼️</span>
-                <span className="admin-nav-label">Xem GIF</span>
+                <span className="admin-nav-label">View GIF</span>
               </Link>
             </li>
             <li className="admin-nav-item">
               <Link to="/admin/manage-orders">
                 <span className="admin-nav-icon">📦</span>
-                <span className="admin-nav-label">Quản lý ORDER</span>
+                <span className="admin-nav-label">ORDER</span>
               </Link>
             </li>
             {/* <li className="admin-nav-item">
