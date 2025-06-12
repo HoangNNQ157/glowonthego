@@ -88,50 +88,50 @@ const Home = () => {
     <div className="home">
       {/* Banner */}
       <div className="home__banner">
-        <img src="/images/banner__home.png" alt="Banner" />
+        <img src="/images/home.png" alt="Banner" />
       </div>
 
       {/* Best Sellers */}
       <section className="home__best-sellers">
         <div className="flex-grow container mx-auto px-4 py-8">
-        <h2 className="home__section-title">Best Sellers</h2>
-        {loadingCharms ? (
-          <div>Loading charms...</div>
-        ) : errorCharms ? (
-          <div style={{ color: 'red' }}>{errorCharms}</div>
-        ) : charmBestSellers.length === 0 ? (
-          <div>No charms available for best sellers.</div>
-        ) : (
-          <Swiper
-            slidesPerView={4}
-            spaceBetween={20}
-            pagination={{ clickable: true }}
-            className="mySwiper"
-          >
-            {charmBestSellers.map((item) => (
-              <SwiperSlide key={item.id} className="best-seller-card-slide">
-                <Link to={`/charm/${item.id}`} style={{ textDecoration: 'none' }}>
-                  <div className={`best-seller-card`}>
-                    <div className="best-seller-card__image-container">
-                      <img src={item.image} alt={item.charmName} />
-                      <button className="best-seller-card__add-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-plus-circle">
-                          <circle cx="12" cy="12" r="10"></circle>
-                          <line x1="12" y1="8" x2="12" y2="16"></line>
-                          <line x1="8" y1="12" x2="16" y2="12"></line>
-                        </svg>
-                      </button>
+          <h2 className="home__section-title">Best Sellers</h2>
+          {loadingCharms ? (
+            <div>Loading charms...</div>
+          ) : errorCharms ? (
+            <div style={{ color: 'red' }}>{errorCharms}</div>
+          ) : charmBestSellers.length === 0 ? (
+            <div>No charms available for best sellers.</div>
+          ) : (
+            <Swiper
+              slidesPerView={4}
+              spaceBetween={20}
+              pagination={{ clickable: true }}
+              className="mySwiper"
+            >
+              {charmBestSellers.map((item) => (
+                <SwiperSlide key={item.id} className="best-seller-card-slide">
+                  <Link to={`/charm/${item.id}`} style={{ textDecoration: 'none' }}>
+                    <div className={`best-seller-card`}>
+                      <div className="best-seller-card__image-container">
+                        <img src={item.image} alt={item.charmName} />
+                        <button className="best-seller-card__add-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-plus-circle">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                          </svg>
+                        </button>
+                      </div>
+                      <div className="best-seller-card__info">
+                        <div className="best-seller-card__name">{item.charmName}</div>
+                        <div className="best-seller-card__price">{item.price.toLocaleString('vi-VN')}₫</div>
+                      </div>
                     </div>
-                    <div className="best-seller-card__info">
-                      <div className="best-seller-card__name">{item.charmName}</div>
-                      <div className="best-seller-card__price">{item.price.toLocaleString('vi-VN')}₫</div>
-                    </div>
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
+                  </Link>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
         </div>
       </section>
 
@@ -147,10 +147,14 @@ const Home = () => {
 
       {/* Shop The Look */}
       <section className="home__shop-look">
+
         <div className="home__shop-look-img">
-          <img src="/images/bg.png" alt="Shop The Look" />
-          <button className="home__shop-now-btn">SHOP NOW</button>
+          <img src="/images/home_2.png" alt="Shop The Look" />
+          <Link to="/custom#custom__products-section" className="home__shop-now-btn">
+            SHOP NOW
+          </Link>
         </div>
+
         <div className="home__shop-look-list">
           <h3>Shop The Look</h3>
           {loadingProducts ? (
@@ -195,7 +199,7 @@ const Home = () => {
       <section className="home__categories">
         <div className="home__categories-carousel">
           <Link to="/new-trending" className="home__categories-card">
-            <img src="/images/bg__1.png" alt="New & Trending" className="home__categories-image" />
+            <img src="/images/home_1.png" alt="New & Trending" className="home__categories-image" />
             <div className="home__categories-info">
               <h3 className="home__categories-title">New & Trending</h3>
               <button className="home__categories-button">SHOP NOW</button>
@@ -307,8 +311,6 @@ const Home = () => {
         </div>
         <div className="home__visit-store-content">
           <div className="home__visit-store-card">
-            <h3 className="home__visit-store-title">Visit a Glow on<br />the flow<br />store near you!</h3>
-            <p className="home__visit-store-description">Get to know where our stores are located!</p>
             {/* <button className="home__visit-store-button">OUR STORES</button> */}
           </div>
         </div>

@@ -218,7 +218,7 @@ const NewTrending = () => {
                 />
               </div>
             </div>
-            
+
             <div className="filter-popup__footer">
               <button className="btn-clear" onClick={handleClearFilters}>Xóa bộ lọc</button>
               <button className="btn-apply" onClick={handleApplyFilters}>Áp dụng</button>
@@ -229,7 +229,7 @@ const NewTrending = () => {
 
       <section className="new-trending__header-section">
         <div className="container">
-          <h1 className="new-trending__main-title">SHOP ALL / NEW & TRENDING</h1>
+          <h1 id="new-trending__main-title" className="new-trending__main-title">SHOP ALL / NEW & TRENDING</h1>
           <div className="new-trending__content-row">
             <div className="new-trending__header-left">
               <img src="/images/newtrending_header.png" alt="Shop All" className="new-trending__header-image" />
@@ -256,7 +256,7 @@ const NewTrending = () => {
                 <div className="new-trending__no-products">Không tìm thấy sản phẩm nào.</div>
               ) : (
                 products.map((product) => (
-                  <Link 
+                  <Link
                     to={`/product/${product.id}`}
                     key={product.id}
                     style={{ textDecoration: 'none' }}

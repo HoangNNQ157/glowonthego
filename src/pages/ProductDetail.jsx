@@ -1,12 +1,11 @@
-import './ProductDetail.scss';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { useEffect, useState } from 'react';
 import ProductService from '../services/product.service';
 import CartService from '../services/cart.service';
-import { toast } from 'react-toastify';
 import ReviewService from '../services/review.service';
+import { toast } from 'react-toastify';
 import AuthService from '../services/auth.service';
 
 const PAIRS_WELL_WITH = [
@@ -42,6 +41,7 @@ const ProductDetail = () => {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [isReviewFormOpen, setIsReviewFormOpen] = useState(false); // Trạng thái của form review
   const isAuthenticated = AuthService.isAuthenticated();
 
   useEffect(() => {
@@ -86,7 +86,6 @@ const ProductDetail = () => {
     };
 
     fetchProductDetail();
-
   }, [id]);
 
   const handleAddToCart = () => {
@@ -148,6 +147,10 @@ const ProductDetail = () => {
               <span>Size</span>
               <div className="product-detail__sizes">
                 {productDetail.size && <button className="active">{productDetail.size}</button>}
+              </div>
+              <span>Quantity</span>
+              <div className="product-detail__sizes">
+                {productDetail.quantity && <button className="active">{productDetail.quantity}</button>}
               </div>
               <a href="#" className="product-detail__find-size">Find your size</a>
             </div>
@@ -221,18 +224,26 @@ const ProductDetail = () => {
       </div>
       {isAuthenticated && (
         <div className="review-form-section">
-          <h3>Đánh giá sản phẩm</h3>
-          <form className="review-form" onSubmit={handleReviewSubmit}>
-            <label>Chọn số sao:
-              <select value={rating} onChange={e => setRating(Number(e.target.value))}>
-                {[1,2,3,4,5].map(star => <option key={star} value={star}>{star}</option>)}
-              </select>
-            </label>
-            <label>Bình luận:
-              <textarea value={comment} onChange={e => setComment(e.target.value)} required rows={3} />
-            </label>
-            <button type="submit" disabled={submitting} className="review-submit-btn">Gửi đánh giá</button>
-          </form>
+          <button
+            onClick={() => setIsReviewFormOpen(prev => !prev)}
+            className="toggle-review-btn"
+          >
+            {isReviewFormOpen ? 'Hide Review Form' : 'Product Reviews'}
+          </button>
+
+          {isReviewFormOpen && (
+            <form className="review-form" onSubmit={handleReviewSubmit}>
+              <label>Give a star rating:
+                <select value={rating} onChange={e => setRating(Number(e.target.value))}>
+                  {[1,2,3,4,5].map(star => <option key={star} value={star}>{star}</option>)}
+                </select>
+              </label>
+              <label>Comment:
+                <textarea value={comment} onChange={e => setComment(e.target.value)} required rows={3} />
+              </label>
+              <button type="submit" disabled={submitting} className="review-submit-btn">Submit</button>
+            </form>
+          )}
         </div>
       )}
     </div>

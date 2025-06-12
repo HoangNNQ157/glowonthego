@@ -44,9 +44,8 @@ const Charm = () => {
     <div className="charm">
       {/* Banner Section */}
       <div className="charm__banner">
-        <img src="/images/bg_charm.png" alt="Charm Banner" />
+        <img src="/images/charmhome.png" alt="Charm Banner" />
         <div className="charm__banner-overlay">
-          <h1>CHAMR</h1>
           <p>
             "The most charming thing about life is that it's<br />
             not the big events that shape our stories —<br />
@@ -102,7 +101,8 @@ const Charm = () => {
         {/* Build Your Charm Story Section */}
         <section className="charm__build-story">
           <div className="charm__build-story-content">
-            <h2>Build Your Charm Story</h2>
+            <h2>Build Your</h2>
+            <h2>Charm Story</h2>
             {/* <button className="charm__build-story-button">BUILD YOURS HERE</button> */}
           </div>
         </section>
