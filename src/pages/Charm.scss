@@ -34,15 +34,12 @@
       padding-left: 5rem;
       color: white;
 
-      h1 {
-        font-size: 4rem;
-        margin-bottom: 1rem;
-        text-align: left;
-      }
 
       p {
         font-size: 1.2rem;
         text-align: left;
+        margin-top: 240px;
+        margin-left: 85px;
         line-height: 1.5;
       }
     }
@@ -176,7 +173,7 @@
     display: flex;
     align-items: center;
     padding-left: 5rem;
-    color: white;
+    color: rgb(231, 231, 231);
     /* Placeholder background images - replace with actual image paths */
     background-size: cover;
     background-position: center;
@@ -185,9 +182,11 @@
       z-index: 1; /* Ensure content is above background image */
 
       h2 {
-        font-size: 3rem; /* Adjust font size based on image */
+        font-size: 4rem; /* Adjust font size based on image */
         margin-bottom: 0.5rem;
         text-align: left;
+        color: rgb(11, 11, 11);
+        font-family: 'Poppins', 
       }
 
       p {
@@ -197,6 +196,8 @@
       }
     }
 
+
+    
     &-button {
       background-color: black;
       color: white;
@@ -220,7 +221,7 @@
   }
 
   &__build-story {
-    background-image: url('/images/build_your_charm_story_bg.png'); /* Replace with actual image path */
+    background-image: url('/images/image_10.png'); /* Replace with actual image path */
   }
 
   > .container h1 {
