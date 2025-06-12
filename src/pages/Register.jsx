@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthService from '../services/auth.service';
+import { Link } from 'react-router-dom'; 
 import './Login.scss'; // We'll reuse the login styles
 
 const Register = () => {
@@ -118,7 +119,7 @@ const handleSubmit = async (e) => {
             {loading ? 'Đang đăng ký...' : 'REGISTER'}
           </button>
           <div className="login-signup-text">
-            Already have an account? <a href="/login">Login</a>
+            Already have an account?<Link to="/login">Login</Link>
           </div>
         </div>
       </div>
