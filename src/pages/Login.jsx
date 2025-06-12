@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthService from '../services/auth.service';
 import './Login.scss';
+import { Link } from 'react-router-dom'; 
 
 
 const Login = () => {
@@ -66,7 +67,7 @@ const Login = () => {
             {loading ? 'Đang đăng nhập...' : 'LOGIN'}
           </button>
           <div className="login-signup-text">
-            Don't have an account? <a href="/register">Sign up</a>
+            Don't have an account? <Link to="/register">Sign up</Link>
           </div>
           <div className="login-social-buttons">
             <button className="login-social-button login-facebook">
