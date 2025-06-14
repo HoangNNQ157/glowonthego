@@ -18,6 +18,8 @@ const ManageOrders = () => {
   const [shippers, setShippers] = useState([]);
   const [assigning, setAssigning] = useState({}); // { [orderId]: boolean }
 
+
+
   const fetchOrders = async () => {
     setLoading(true);
     try {
@@ -99,7 +101,7 @@ const ManageOrders = () => {
               <th>ID</th>
               <th>Địa chỉ</th>
               <th>SĐT</th>
-              <th>Ghi chú</th>
+              <th>Thành tiền</th>
               <th>Thanh toán</th>
               <th>Sản phẩm</th>
               <th>Shipper</th>
@@ -113,7 +115,7 @@ const ManageOrders = () => {
                 <td>{order.id}</td>
                 <td>{order.address}</td>
                 <td>{order.phoneNumber}</td>
-                <td>{order.note}</td>
+                <td>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.totalAmount)}</td>
                 <td>{order.paymentMethod}</td>
                 <td>
                   <ul className="order-items-list">
@@ -138,7 +140,7 @@ const ManageOrders = () => {
                   </select>
                 </td>
                 <td>
-                  <div style={{display:'flex',flexDirection:'column',gap:6}}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                     <select
                       value={order.deliveryStatus || 0}
                       onChange={e => handleUpdateDelivery(order.id, Number(e.target.value), order.paymentStatus || 0)}
@@ -159,14 +161,14 @@ const ManageOrders = () => {
                 </td>
                 <td>
                   <div className="action-group">
-                    <button className="action-btn edit" onClick={()=>handleDetail(order)}>Chi tiết</button>
-                    <button className="action-btn delete" onClick={()=>handleDelete(order.id)}>Xóa</button>
+                    <button className="action-btn edit" onClick={() => handleDetail(order)}>Chi tiết</button>
+                    <button className="action-btn delete" onClick={() => handleDelete(order.id)}>Xóa</button>
                   </div>
                 </td>
               </tr>
             ))}
             {orders.length === 0 && (
-              <tr><td colSpan={9} style={{textAlign:'center'}}>Không có đơn hàng</td></tr>
+              <tr><td colSpan={9} style={{ textAlign: 'center' }}>Không có đơn hàng</td></tr>
             )}
           </tbody>
         </table>
@@ -182,6 +184,15 @@ const ManageOrders = () => {
               <div><b>Ghi chú:</b> {selectedOrder.note}</div>
               <div><b>Thanh toán:</b> {selectedOrder.paymentMethod}</div>
               <div><b>Giảm giá:</b> {selectedOrder.amountDiscount}</div>
+              <div>
+                <b>Sản Phẩm</b>{' '}
+                {selectedOrder.productType === 1 ? 'Charm' : 'Bracelet'}
+              </div>
+              <div>
+                <b>Vận Chuyển:</b>{' '}
+                {selectedOrder.deliveryStatus === 1 ? 'Đã giao' : 'Chưa giao'}
+              </div>
+
               <div><b>Sản phẩm:</b>
                 <ul className="order-items-list">
                   {selectedOrder.cartItemRequests.map((item, idx) => (
@@ -193,7 +204,7 @@ const ManageOrders = () => {
                 </ul>
               </div>
             </div>
-            <button className="cancel-btn" onClick={()=>setSelectedOrder(null)}>Đóng</button>
+            <button className="cancel-btn" onClick={() => setSelectedOrder(null)}>Đóng</button>
           </div>
         </div>
       )}

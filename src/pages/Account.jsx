@@ -33,7 +33,7 @@ const Account = () => {
         navigate('/login');
         return;
       }
-      
+
       // Fetch full user details using the userId from currentUser
       const fullUserDetails = await AuthService.getUserById(currentUser.userId);
       console.log('Full user details from API:', fullUserDetails);
@@ -112,7 +112,7 @@ const Account = () => {
         setLoading(false);
         return;
       }
-      
+
       const response = await AuthService.updateUserProfile(user.id, updatedFields);
       console.log('Profile updated successfully:', response);
       setUser(response); // Update local user state with response from API
@@ -154,19 +154,19 @@ const Account = () => {
   }
 
   if (!user) {
-      // This block is less likely to be reached now due to the redirect,
-      // but remains as a fallback or if redirect is removed.
-      return (
-        <div className="login-page"> {/* Reusing login page layout/styles */}
-          <div className="login-container"> {/* Reusing login container styles */}
-            <h1 className="login-title">Access Denied</h1>
-            <p className="login-subtitle">Please log in to view your account information.</p>
-            <div className="login-signup-text">
-              <Link to="/login">Go to Login Page</Link>
-            </div>
+    // This block is less likely to be reached now due to the redirect,
+    // but remains as a fallback or if redirect is removed.
+    return (
+      <div className="login-page"> {/* Reusing login page layout/styles */}
+        <div className="login-container"> {/* Reusing login container styles */}
+          <h1 className="login-title">Access Denied</h1>
+          <p className="login-subtitle">Please log in to view your account information.</p>
+          <div className="login-signup-text">
+            <Link to="/login">Go to Login Page</Link>
           </div>
         </div>
-      );
+      </div>
+    );
   }
 
   return (
@@ -248,14 +248,18 @@ const Account = () => {
                 <p><strong>Total Amount:</strong> {order.totalAmount ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.totalAmount) : 'N/A'}</p>
                 <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
                 <p><strong>Delivery Address:</strong> {order.address}</p>
+                <p><strong>Delivery Status:</strong> {order.deliveryStatus === 1 ? 'Delivered' : 'Not Delivered'}</p>
                 <p><strong>Phone Number:</strong> {order.phoneNumber}</p>
                 <p><strong>Note:</strong> {order.note}</p>
                 <h4>Products:</h4>
                 <ul className="order-products-list">
                   {order.cartItemRequests.map((item, index) => (
                     <li key={index} className="order-product-item">
-                      <span>Product Type: {item.productType === 1 ? 'Bracelet' : 'Charm'}, ID: {item.productId}, Quantity: {item.quantity}</span>
-                      <button 
+                      <span>
+                        Product: {item.productType === 2 ? 'Charm' : 'Bracelet'}, Quantity: {item.quantity}
+                      </span>
+
+                      <button
                         className="review-product-btn"
                         onClick={() => handleReviewClick(item)}
                       >
