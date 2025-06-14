@@ -18,7 +18,6 @@ const AddCharm = () => {
     qrMessage: '',
     // Add other fields like color, size, quantity, image, isActive based on your API
     color: '',
-    size: '',
     quantity: 0,
     image: '',
     isActive: true,
@@ -148,16 +147,7 @@ const AddCharm = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label htmlFor="size">Kích thước:</label>
-          <input
-            type="text"
-            id="size"
-            name="size"
-            value={charmData.size}
-            onChange={handleInputChange}
-          />
-        </div>
+
         <div>
           <label htmlFor="quantity">Số lượng:</label>
           <input
@@ -170,7 +160,7 @@ const AddCharm = () => {
           />
         </div>
         <div>
-          <label htmlFor="image">URL Hình ảnh:</label>
+          <label htmlFor="image">Hình ảnh:</label>
           <input
             type="text"
             id="image"

@@ -140,7 +140,7 @@ const Checkout = () => {
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="phoneNumber">Phone Number:</label>
-                    <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required />
+                    <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} pattern="\d*" required />
                 </div>
 
                 <div className="form-group">

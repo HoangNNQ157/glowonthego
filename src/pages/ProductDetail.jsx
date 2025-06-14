@@ -38,11 +38,11 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [quantity, setQuantity] = useState(1);
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [isReviewFormOpen, setIsReviewFormOpen] = useState(false); // Trạng thái của form review
-  const isAuthenticated = AuthService.isAuthenticated();
+  // const [rating, setRating] = useState(5);
+  // const [comment, setComment] = useState('');
+  // const [submitting, setSubmitting] = useState(false);
+  // const [isReviewFormOpen, setIsReviewFormOpen] = useState(false); // Trạng thái của form review
+  // const isAuthenticated = AuthService.isAuthenticated();
 
   useEffect(() => {
     const fetchProductDetail = async () => {
@@ -89,32 +89,33 @@ const ProductDetail = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    if (productDetail) {
-      const itemToAdd = {
-        productType: 1,
-        productId: productDetail.id,
-        quantity: quantity,
-      };
-      CartService.addItem(itemToAdd);
-      toast.success(`${productDetail.braceleteName} added to cart!`);
-    } else {
-      toast.error('Could not add product to cart.');
+    if (productDetail.quantity === 0) {
+      toast.error(`${productDetail.braceleteName} hiện đang hết hàng.`);
+      return;
     }
+
+    const itemToAdd = {
+      productType: 1,
+      productId: productDetail.id,
+      quantity: quantity,
+    };
+    CartService.addItem(itemToAdd);
+    toast.success(`${productDetail.braceleteName} đã được thêm vào giỏ hàng!`);
   };
 
-  const handleReviewSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    try {
-      await ReviewService.createReview({ productId: productDetail.id, rating, comment });
-      toast.success('Gửi đánh giá thành công!');
-      setRating(5);
-      setComment('');
-    } catch {
-      toast.error('Gửi đánh giá thất bại!');
-    }
-    setSubmitting(false);
-  };
+  // const handleReviewSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setSubmitting(true);
+  //   try {
+  //     await ReviewService.createReview({ productId: productDetail.id, rating, comment });
+  //     toast.success('Gửi đánh giá thành công!');
+  //     setRating(5);
+  //     setComment('');
+  //   } catch {
+  //     toast.error('Gửi đánh giá thất bại!');
+  //   }
+  //   setSubmitting(false);
+  // };
 
   if (loading) {
     return <div style={{ padding: 40 }}>Loading product...</div>;
@@ -152,13 +153,20 @@ const ProductDetail = () => {
               <div className="product-detail__sizes">
                 {productDetail.quantity && <button className="active">{productDetail.quantity}</button>}
               </div>
-              <a href="#" className="product-detail__find-size">Find your size</a>
+              {/* <a href="#" className="product-detail__find-size">Find your size</a> */}
             </div>
             <div className="product-detail__qty-row">
               <button onClick={() => setQuantity(prev => Math.max(1, prev - 1))}>-</button>
               <span>{quantity}</span>
               <button onClick={() => setQuantity(prev => prev + 1)}>+</button>
-              <button className="product-detail__customize-btn" onClick={handleAddToCart}>Thêm Vào Giỏ Hàng</button>
+              <button
+                className="product-detail__customize-btn"
+                onClick={handleAddToCart}
+                disabled={productDetail.quantity === 0}
+              >
+                {productDetail.quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+              </button>
+
             </div>
             <div className="product-detail__desc-block">
               <div className="product-detail__desc-title">Description</div>
@@ -204,7 +212,7 @@ const ProductDetail = () => {
           >
             {(relatedProducts || []).map((item) => (
               <SwiperSlide key={item.id} style={{ width: 260 }}>
-                <Link 
+                <Link
                   to={`/product/${item.id}`}
                   style={{ textDecoration: 'none' }}
                 >
@@ -222,7 +230,7 @@ const ProductDetail = () => {
           </Swiper>
         </div>
       </div>
-      {isAuthenticated && (
+      {/* {isAuthenticated && (
         <div className="review-form-section">
           <button
             onClick={() => setIsReviewFormOpen(prev => !prev)}
@@ -245,7 +253,7 @@ const ProductDetail = () => {
             </form>
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
