@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import CharmService from '../services/charm.service'; // Use CharmService
 import CartService from '../services/cart.service'; // Import CartService
 import { toast } from 'react-toastify'; // Import toast
-import ReviewService from '../services/review.service';
-import AuthService from '../services/auth.service';
+// import ReviewService from '../services/review.service';
+// import AuthService from '../services/auth.service';
 
 // PAIRS_WELL_WITH can be kept or removed/updated as needed for Charms
 const PAIRS_WELL_WITH = [
@@ -44,8 +44,6 @@ const CharmDetail = () => { // Renamed component
   // const [comment, setComment] = useState('');
   // const [submitting, setSubmitting] = useState(false);
   // const isAuthenticated = AuthService.isAuthenticated();
-  // const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
-
 
   useEffect(() => {
     const fetchCharmDetail = async () => { // Renamed function
@@ -95,19 +93,22 @@ const CharmDetail = () => { // Renamed component
   }, [id]); // isCharm dependency removed
 
   const handleAddToCart = () => {
-    if (charmDetail.quantity === 0) {
-      toast.error(`${charmDetail.charmName} hiện đang hết hàng.`);
-      return;
-    }
+  if (!charmDetail) return;
 
-    const cartItem = {
-      productId: charmDetail.id,
-      productType: 2,
-      quantity: selectedQuantity,
-    };
-    CartService.addItem(cartItem);
-    toast.success(`${charmDetail.charmName} đã được thêm vào giỏ hàng!`);
+  if (selectedQuantity > charmDetail.quantity) {
+    toast.error('Not enough stock available.');
+    return;
+  }
+
+  const cartItem = {
+    productId: charmDetail.id,
+    productType: 1,
+    quantity: selectedQuantity,
   };
+
+  CartService.addItem(cartItem);
+  toast.success(`${charmDetail.charmName} added to cart!`);
+};
 
 
   // const handleReviewSubmit = async (e) => {
@@ -157,12 +158,25 @@ const CharmDetail = () => { // Renamed component
               <div className="product-detail__sizes">
                 <button className="active">{charmDetail.quantity}</button> {/* Use charmDetail properties */}
               </div>
-              {/* <a href="#" className="product-detail__find-size">Find your size</a> */}
+              <a href="#" className="product-detail__find-size">Find your size</a>
             </div>
             <div className="product-detail__qty-row">
-              <button onClick={() => setSelectedQuantity(prev => Math.max(1, prev - 1))}>-</button>
+              <button
+                onClick={() => setSelectedQuantity(prev => Math.max(1, prev - 1))} disabled={charmDetail.quantity === 0}
+              >
+                -
+              </button>
               <span>{selectedQuantity}</span>
-              <button onClick={() => setSelectedQuantity(prev => prev + 1)}>+</button>
+              <button
+                onClick={() =>
+                  setSelectedQuantity(prev =>
+                    Math.min(prev + 1, charmDetail.quantity)
+                  )
+                }
+                disabled={selectedQuantity >= charmDetail.quantity}
+              >
+                +
+              </button>
               <button
                 className="product-detail__customize-btn"
                 onClick={handleAddToCart}
@@ -170,7 +184,6 @@ const CharmDetail = () => { // Renamed component
               >
                 {charmDetail.quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
               </button>
-
             </div>
             <div className="product-detail__desc-block">
               <div className="product-detail__desc-title">Description</div>
@@ -236,36 +249,20 @@ const CharmDetail = () => { // Renamed component
       </div>
       {/* {isAuthenticated && (
         <div className="review-form-section">
-          <button
-            onClick={() => setIsReviewFormOpen(prev => !prev)}
-            className="toggle-review-btn"
-          >
-            {isReviewFormOpen ? 'Hide Review Form' : 'Product Reviews'}
-          </button>
-
-          {isReviewFormOpen && (
-            <form className="review-form" onSubmit={handleReviewSubmit}>
-              <label>Give a star rating:
-                <select value={rating} onChange={e => setRating(Number(e.target.value))}>
-                  {[1, 2, 3, 4, 5].map(star => (
-                    <option key={star} value={star}>{star}</option>
-                  ))}
-                </select>
-              </label>
-              <label>Comment:
-                <textarea
-                  value={comment}
-                  onChange={e => setComment(e.target.value)}
-                  required
-                  rows={3}
-                />
-              </label>
-              <button type="submit" disabled={submitting} className="review-submit-btn">Submit</button>
-            </form>
-          )}
+          <h3>Đánh giá sản phẩm</h3>
+          <form className="review-form" onSubmit={handleReviewSubmit}>
+            <label>Chọn số sao:
+              <select value={rating} onChange={e => setRating(Number(e.target.value))}>
+                {[1,2,3,4,5].map(star => <option key={star} value={star}>{star}</option>)}
+              </select>
+            </label>
+            <label>Bình luận:
+              <textarea value={comment} onChange={e => setComment(e.target.value)} required rows={3} />
+            </label>
+            <button type="submit" disabled={submitting} className="review-submit-btn">Gửi đánh giá</button>
+          </form>
         </div>
       )} */}
-
     </div>
   );
 };

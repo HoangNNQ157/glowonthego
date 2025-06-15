@@ -59,6 +59,7 @@ const Custom = () => {
   const [filterMaxPrice, setFilterMaxPrice] = useState('');
   const [filterSortBy, setFilterSortBy] = useState('nameAsc'); // Default sort
   const [charmCategories, setCharmCategories] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(16);
 
   // Temporary filter state for popup
   const [tempFilter, setTempFilter] = useState({
@@ -241,6 +242,11 @@ const Custom = () => {
     }
   };
 
+  const handleLoadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 16);
+  };
+
+
   return (
     <div className="custom">
       {/* Filter Popup */}
@@ -262,7 +268,7 @@ const Custom = () => {
                   value={tempFilter.category}
                   onChange={handleTempFilterChange}
                 >
-                  <option value="">Tất cả</option>
+                  <option value="">All</option>
                   {charmCategories.map(cat => (
                     <option key={cat.id} value={cat.id}>
                       {cat.categoryName}
@@ -279,7 +285,7 @@ const Custom = () => {
                   name="color"
                   value={tempFilter.color}
                   onChange={handleTempFilterChange}
-                  placeholder="Ví dụ: Vàng, Bạc"
+                  placeholder="e.g., Gold, Silver"
                 />
               </div>
 
@@ -290,7 +296,7 @@ const Custom = () => {
                   name="minPrice"
                   value={tempFilter.minPrice}
                   onChange={handleTempFilterChange}
-                  placeholder="Từ"
+                  placeholder="Min"
                 />
                 <span>-</span>
                 <input
@@ -298,7 +304,7 @@ const Custom = () => {
                   name="maxPrice"
                   value={tempFilter.maxPrice}
                   onChange={handleTempFilterChange}
-                  placeholder="Đến"
+                  placeholder="Max"
                 />
               </div>
 
@@ -310,21 +316,22 @@ const Custom = () => {
                   value={tempFilter.sortBy}
                   onChange={handleTempFilterChange}
                 >
-                  <option value="nameAsc">Tên (A-Z)</option>
-                  <option value="nameDesc">Tên (Z-A)</option>
-                  <option value="priceAsc">Giá (Thấp-Cao)</option>
-                  <option value="priceDesc">Giá (Cao-Thấp)</option>
+                  <option value="nameAsc">Name (A-Z)</option>
+                  <option value="nameDesc">Name (Z-A)</option>
+                  <option value="priceAsc">Price (Low to High)</option>
+                  <option value="priceDesc">Price (High to Low)</option>
                 </select>
               </div>
             </div>
 
             <div className="filter-popup__footer">
-              <button className="btn-clear" onClick={handleClearFilters}>Xóa bộ lọc</button>
-              <button className="btn-apply" onClick={handleApplyFilters}>Áp dụng</button>
+              <button className="btn-clear" onClick={handleClearFilters}>Clear Filters</button>
+              <button className="btn-apply" onClick={handleApplyFilters}>Apply</button>
             </div>
           </div>
         </div>
       )}
+
 
       {/* Banner Section */}
       <div className="custom__banner">
@@ -336,9 +343,9 @@ const Custom = () => {
       {/* Category/Content Section */}
       <section className="custom__content-section">
         <div className="container">
-          <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
-                      <img src="/images/logo.svg" alt="Logo" className="custom__logo" /> 
-            </div>{/* Logo */}
+          <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+            <img src="/images/logo.svg" alt="Logo" className="custom__logo" />
+          </div>{/* Logo */}
           <h3 className="custom__category">CATEGORY</h3>
           <h2 className="custom__qr-content-title">CUSTOM QR CONTENT</h2>
         </div>
@@ -347,7 +354,7 @@ const Custom = () => {
       {/* Radio/Image Section */}
       <section className="custom__radio-image-section">
         {/* GIF Upload Section - Now main content of radio-image-section */}
-        <div className="container custom__gif-upload-content-wrapper"> {/* Add a wrapper for centering */} 
+        <div className="container custom__gif-upload-content-wrapper"> {/* Add a wrapper for centering */}
           <h2>Upload Your Custom File</h2>
           <div className="custom__upload-area">
             <input
@@ -384,7 +391,7 @@ const Custom = () => {
           <div className="custom__filter-sort">
             <button className="custom__filter-sort-button" onClick={toggleFilterPopup}>FILTER & SORT</button>
           </div>
-          
+
           {loadingCharms ? (
             <div className="custom__loading">Loading charms...</div>
           ) : errorCharms ? (
@@ -394,8 +401,8 @@ const Custom = () => {
               {charmProducts.length === 0 ? (
                 <div className="custom__no-products">No charms available</div>
               ) : (
-                charmProducts.map((product) => (
-                  <Link 
+                charmProducts.slice(0, visibleCount).map((product) => (
+                  <Link
                     to={`/charm/${product.id}`}
                     key={product.id}
                     style={{ textDecoration: 'none' }}
@@ -424,11 +431,15 @@ const Custom = () => {
       <section className="custom__you-may-also-like-section">
         <div className="container">
           <div className="custom__viewed-products-info">
-            
           </div>
-          <div className="custom__load-more">
-            <button className="custom__load-more-button">LOAD MORE</button>
-          </div>
+          {charmProducts.length > visibleCount && (
+            <div className="custom__load-more">
+              <button className="custom__load-more-button" onClick={handleLoadMore}>
+                LOAD MORE
+              </button>
+            </div>
+          )}
+
 
           <h2 className="custom__you-may-also-like-title">YOU MAY ALSO LIKE</h2>
 

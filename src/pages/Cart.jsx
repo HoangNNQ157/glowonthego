@@ -20,16 +20,16 @@ const fetchProductDetails = async (productId) => {
 };
 
 const fetchCharmDetails = async (charmId) => {
-    console.log(`Fetching details for Charm ID: ${charmId}`);
-    try {
-      // *** Replace with your actual API call to get charm details by ID ***
-      const response = await axiosInstance.get(`/charm/${charmId}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Failed to fetch charm details for ID ${charmId}:`, error);
-      return null; // Return null or throw error as appropriate
-    }
-  };
+  console.log(`Fetching details for Charm ID: ${charmId}`);
+  try {
+    // *** Replace with your actual API call to get charm details by ID ***
+    const response = await axiosInstance.get(`/charm/${charmId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch charm details for ID ${charmId}:`, error);
+    return null; // Return null or throw error as appropriate
+  }
+};
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -53,16 +53,16 @@ export default function Cart() {
 
       // Fetch detailed info for display
       const detailedCartItems = await Promise.all(cartFromStorage.map(async (cartItem) => {
-          let details = null;
-          if (cartItem.productType === 1) {
-              details = await fetchProductDetails(cartItem.productId);
-          } else if (cartItem.productType === 2) {
-               details = await fetchCharmDetails(cartItem.productId);
-          }
-          // Add other product types as needed
+        let details = null;
+        if (cartItem.productType === 1) {
+          details = await fetchCharmDetails(cartItem.productId);
+        } else if (cartItem.productType === 2) {
+          details = await fetchProductDetails(cartItem.productId);
+        }
+        // Add other product types as needed
 
-          // Correctly merge details and cartItem, prioritizing cart quantity
-          return { ...details, ...cartItem };
+        // Correctly merge details and cartItem, prioritizing cart quantity
+        return { ...details, ...cartItem };
       }));
 
       // Update state again with detailed items
@@ -90,11 +90,11 @@ export default function Cart() {
   }, []);
 
   const calculateTotal = () => {
-      return cartItems.reduce((sum, item) => {
-          const priceString = typeof item.price === 'string' ? item.price.replace(/[^\d,.]/g, '').replace(',', '.') : item.price;
-          const price = parseFloat(priceString) || 0;
-          return sum + (price * (item.quantity || 0));
-      }, 0);
+    return cartItems.reduce((sum, item) => {
+      const priceString = typeof item.price === 'string' ? item.price.replace(/[^\d,.]/g, '').replace(',', '.') : item.price;
+      const price = parseFloat(priceString) || 0;
+      return sum + (price * (item.quantity || 0));
+    }, 0);
   };
 
   const formatPriceVND = (price) => {
@@ -108,14 +108,14 @@ export default function Cart() {
 
     // Fetch detailed info for the updated cart
     const detailedCartItems = await Promise.all(updatedCart.map(async (cartItem) => {
-        let details = null;
-        if (cartItem.productType === 1) {
-            details = await fetchProductDetails(cartItem.productId);
-        } else if (cartItem.productType === 2) {
-             details = await fetchCharmDetails(cartItem.productId);
-        }
-        // Correctly merge details and cartItem, prioritizing cart quantity
-        return { ...details, ...cartItem };
+      let details = null;
+      if (cartItem.productType === 1) {
+        details = await fetchCharmDetails(cartItem.productId);
+      } else if (cartItem.productType === 2) {
+        details = await fetchProductDetails(cartItem.productId);
+      }
+      // Correctly merge details and cartItem, prioritizing cart quantity
+      return { ...details, ...cartItem };
     }));
 
     // Update state only once with the fully detailed, updated items
@@ -126,13 +126,13 @@ export default function Cart() {
     CartService.removeItem(item);
     const updatedCart = CartService.getCart();
     const detailedCartItems = await Promise.all(updatedCart.map(async (cartItem) => {
-        let details = null;
-        if (cartItem.productType === 1) {
-            details = await fetchProductDetails(cartItem.productId);
-        } else if (cartItem.productType === 2) {
-             details = await fetchCharmDetails(cartItem.productId);
-        }
-        return { ...details, ...cartItem }; // Merge details first, then cartItem to prioritize cart quantity
+      let details = null;
+      if (cartItem.productType === 1) {
+        details = await fetchCharmDetails(cartItem.productId);
+      } else if (cartItem.productType === 2) {
+        details = await fetchProductDetails(cartItem.productId);
+      }
+      return { ...details, ...cartItem }; // Merge details first, then cartItem to prioritize cart quantity
     }));
     setCartItems(detailedCartItems);
   };
@@ -161,13 +161,16 @@ export default function Cart() {
             ) : (
               cartItems.map(item => (
                 <div className="cart-item" key={`${item.productType}-${item.productId}`}>
-                  <div className="cart-item__img"><img src={item.image} alt={item.name} /></div>
+                  <div className="cart-item__img"><img src={item.image}/></div>
                   <div className="cart-item__info">
-                    <div className="cart-item__name">{item.name}</div>
+                    <div className="cart-item__name">
+                      {item.name || item.charmName || item.braceleteName || 'Tên chưa có'}
+                    </div>
+
                     {/* Display details based on product type */}
                     {item.productType === 1 && (
                       <>
-                        {(item.color || item.size) && 
+                        {(item.color || item.size) &&
                           <div className="cart-item__variant">
                             {item.color && <span>Color: {item.color}</span>}
                             {item.color && item.size && <span>, </span>}
@@ -180,14 +183,14 @@ export default function Cart() {
                     )}
                     {item.productType === 2 && (
                       <>
-                         <div className="cart-item__charm-details">
-                            {/* Charm details */}
-                            <div className="cart-item__charm-name">{item.charmName}</div> {/* Use charmName for charms */}
-                            {/* {item.description && <div className="cart-item__charm-description">{item.description}</div>} */}
-                            {/* Add other charm specific fields if needed, e.g., QR message */}
-                            {/* {item.qrMessage && <div className="cart-item__charm-qr">QR Message: {item.qrMessage}</div>} */}
-                             <div className="cart-item__price">{formatPriceVND(parseFloat(item.price))}</div> {/* Price for charms */}
-                         </div>
+                        <div className="cart-item__charm-details">
+                          {/* Charm details */}
+                          <div className="cart-item__charm-name">{item.charmName}</div> {/* Use charmName for charms */}
+                          {/* {item.description && <div className="cart-item__charm-description">{item.description}</div>} */}
+                          {/* Add other charm specific fields if needed, e.g., QR message */}
+                          {/* {item.qrMessage && <div className="cart-item__charm-qr">QR Message: {item.qrMessage}</div>} */}
+                          <div className="cart-item__price">{formatPriceVND(parseFloat(item.price))}</div> {/* Price for charms */}
+                        </div>
                       </>
                     )}
                     {/*item.variant && <div className="cart-item__variant">{item.variant} <span className="cart-item__price">{formatPriceVND(parseFloat(item.price))}</span></div>*/}
@@ -196,12 +199,12 @@ export default function Cart() {
                       <button onClick={() => handleUpdateQuantity(item, item.quantity - 1)} disabled={item.quantity <= 1}>-</button>
                       <span>
                         {/* Ensure we display the quantity from the latest state */}
-                         {(() => {
-                           // Re-adding explicit lookup and console log for debugging
-                           const latestItem = cartItems.find(ci => ci.productId === item.productId && ci.productType === item.productType);
-                           const quantityToDisplay = latestItem ? latestItem.quantity : (item ? item.quantity : 0);
-                           console.log(`Displaying quantity for item ${item.productId} (Type ${item.productType}): ${quantityToDisplay}`);
-                           return quantityToDisplay;
+                        {(() => {
+                          // Re-adding explicit lookup and console log for debugging
+                          const latestItem = cartItems.find(ci => ci.productId === item.productId && ci.productType === item.productType);
+                          const quantityToDisplay = latestItem ? latestItem.quantity : (item ? item.quantity : 0);
+                          console.log(`Displaying quantity for item ${item.productId} (Type ${item.productType}): ${quantityToDisplay}`);
+                          return quantityToDisplay;
                         })()}
                       </span>
                       <button onClick={() => handleUpdateQuantity(item, item.quantity + 1)}>+</button>
@@ -223,7 +226,7 @@ export default function Cart() {
               {/* Add recommended products here by fetching data from API */}
             </div>
           </div>
-          
+
           <div className="cart-summary-block">
             <div className="cart-summary-row">
               <span>Subtotal ({cartItems.length} items)</span>
@@ -243,8 +246,8 @@ export default function Cart() {
                 <SwiperSlide key={item.id} style={{ width: 260 }}>
                   <div className="cart-ymal-item">
                     {item.badge && <div className="cart-ymal-badge">{item.badge}</div>}
-                    <div className="cart-ymal-img" style={{ background: '#e0e0e0', borderRadius: 12, height: 180 }}>
-                      <img style={{width: "100%"}} src={item.image || '/images/charm__large.png'} alt={item.name} />
+                    <div className="cart-ymal-img" style={{ background: '#e0e0e0', borderRadius: 12, height: 240 }}>
+                      <img style={{ width: "100%" }} src={item.image || '/images/charm__large.png'} alt={item.name} />
                     </div>
                     <div className="cart-ymal-name">{item.name}</div>
                     <div className="cart-ymal-price">{formatPriceVND(item.price)}</div>

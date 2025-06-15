@@ -11,7 +11,7 @@ const Navbar = () => {
     { name: 'NEW & TRENDING', href: '/new-trending' },
     { name: 'CUSTOM', href: '/custom' },
     { name: 'CHARMS', href: '/charm' },
-    { name:  'REVIEW QR', href: '/review-qr' },
+  
   ];
 
   // const secondaryNav = [

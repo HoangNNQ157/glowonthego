@@ -29,6 +29,12 @@ const NewTrending = () => {
   const [filterColor, setFilterColor] = useState('');
   const [filterMinPrice, setFilterMinPrice] = useState('');
   const [filterMaxPrice, setFilterMaxPrice] = useState('');
+  const [visibleCount, setVisibleCount] = useState(16); // Hiện 16 sp ban đầu
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 16); // Mỗi lần load thêm 16
+  };
+
 
   const fetchProducts = useCallback(async () => {
     try {
@@ -150,35 +156,35 @@ const NewTrending = () => {
           <div className="filter-popup__overlay" onClick={toggleFilterPopup}></div>
           <div className="filter-popup__content">
             <div className="filter-popup__header">
-              <h2>Bộ lọc sản phẩm</h2>
+              <h2>Product Filters</h2>
               <button className="filter-popup__close" onClick={toggleFilterPopup}>×</button>
             </div>
 
             <div className="filter-popup__body">
               <div className="filter-group">
-                <label htmlFor="sortBy">Sắp xếp theo</label>
+                <label htmlFor="sortBy">Sort by</label>
                 <select
                   id="sortBy"
                   name="sortBy"
                   value={tempFilter.sortBy}
                   onChange={handleFilterChange}
                 >
-                  <option value="nameAsc">Tên (A-Z)</option>
-                  <option value="nameDesc">Tên (Z-A)</option>
-                  <option value="priceAsc">Giá (Thấp-Cao)</option>
-                  <option value="priceDesc">Giá (Cao-Thấp)</option>
+                  <option value="nameAsc">Name (A-Z)</option>
+                  <option value="nameDesc">Name (Z-A)</option>
+                  <option value="priceAsc">Price (Low to High)</option>
+                  <option value="priceDesc">Price (High to Low)</option>
                 </select>
               </div>
 
               <div className="filter-group">
-                <label htmlFor="category">Danh mục</label>
+                <label htmlFor="category">Category</label>
                 <select
                   id="category"
                   name="category"
                   value={tempFilter.category}
                   onChange={handleFilterChange}
                 >
-                  <option value="">Tất cả</option>
+                  <option value="">All</option>
                   {categories.map((cat) => (
                     <option key={cat.categoryId} value={cat.categoryId}>
                       {cat.categoryName}
@@ -188,25 +194,25 @@ const NewTrending = () => {
               </div>
 
               <div className="filter-group">
-                <label htmlFor="color">Màu sắc</label>
+                <label htmlFor="color">Color</label>
                 <input
                   type="text"
                   id="color"
                   name="color"
                   value={tempFilter.color}
                   onChange={handleFilterChange}
-                  placeholder="Ví dụ: Vàng, Bạc"
+                  placeholder="e.g., Gold, Silver"
                 />
               </div>
 
               <div className="filter-group price-range">
-                <label>Giá</label>
+                <label>Price Range</label>
                 <input
                   type="number"
                   name="minPrice"
                   value={tempFilter.minPrice}
                   onChange={handleFilterChange}
-                  placeholder="Từ"
+                  placeholder="Min"
                 />
                 <span>-</span>
                 <input
@@ -214,16 +220,17 @@ const NewTrending = () => {
                   name="maxPrice"
                   value={tempFilter.maxPrice}
                   onChange={handleFilterChange}
-                  placeholder="Đến"
+                  placeholder="Max"
                 />
               </div>
             </div>
 
             <div className="filter-popup__footer">
-              <button className="btn-clear" onClick={handleClearFilters}>Xóa bộ lọc</button>
-              <button className="btn-apply" onClick={handleApplyFilters}>Áp dụng</button>
+              <button className="btn-clear" onClick={handleClearFilters}>Clear Filters</button>
+              <button className="btn-apply" onClick={handleApplyFilters}>Apply</button>
             </div>
           </div>
+
         </div>
       )}
 
@@ -255,7 +262,7 @@ const NewTrending = () => {
               {products.length === 0 ? (
                 <div className="new-trending__no-products">Không tìm thấy sản phẩm nào.</div>
               ) : (
-                products.map((product) => (
+                products.slice(0, visibleCount).map((product) => (
                   <Link
                     to={`/product/${product.id}`}
                     key={product.id}
@@ -283,7 +290,12 @@ const NewTrending = () => {
       <section className="new-trending__loadmore-block">
         <div className="container">
           {/* <div className="new-trending__viewed-info">You've Viewed 48 of 52 Products</div> */}
-          <button className="new-trending__loadmore-btn">LOAD MORE</button>
+          {visibleCount < products.length && (
+            <button className="new-trending__loadmore-btn" onClick={handleLoadMore}>
+              LOAD MORE
+            </button>
+          )}
+
         </div>
       </section>
 

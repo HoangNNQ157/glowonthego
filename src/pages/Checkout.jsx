@@ -83,16 +83,16 @@ const Checkout = () => {
 
     // Construct the order payload
     const orderPayload = {
-      userId: userData.userId,
       address: formData.address,
       note: formData.note,
-      amountDiscount: 0, // Assuming no discount for now, implement logic if needed
+      amountDiscount: 0,
       paymentMethod: formData.paymentMethod,
+      deliveryStatus: 0, // Added deliveryStatus field with default value 0
       phoneNumber: formData.phoneNumber,
       cartItemRequests: cartItems.map(item => ({
           productType: item.productType,
           productId: item.productId,
-          quantity: item.quantity,
+          quantity: item.quantity
       }))
     };
 
@@ -104,7 +104,14 @@ const Checkout = () => {
 
       toast.success('Order placed successfully!');
       CartService.clearCart(); // Clear cart after successful order
-      navigate('/order-success'); // Navigate to a success page (create this page)
+
+      if (formData.paymentMethod === 'payos' && response.data.urlPayment) {
+        window.location.href = response.data.urlPayment;
+
+        // The user will be redirected by PayOS after payment, so we don't navigate here.
+      } else {
+        navigate('/order-success'); // For Cash on Delivery or if urlPayment is not provided for PayOS
+      }
 
     } catch (err) {
       console.error('Checkout failed:', err);
@@ -157,8 +164,8 @@ const Checkout = () => {
                     <label htmlFor="paymentMethod">Payment Method:</label>
                     <select id="paymentMethod" name="paymentMethod" value={formData.paymentMethod} onChange={handleChange} required>
                         <option value="">Select a method</option>
-                        <option value="Cash">Cash on Delivery</option>
-                        <option value="VNPay">Credit/Debit Card</option>
+                        <option value="cash">Cash on Delivery</option>
+                        <option value="payos">Credit/Debit Card</option>
                         {/* Add other payment methods */}
                     </select>
                 </div>

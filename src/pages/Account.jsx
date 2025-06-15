@@ -243,7 +243,6 @@ const Account = () => {
           <div className="order-list">
             {orders.map((order) => (
               <div key={order.id} className="order-item">
-                <h3>Order ID: {order.id}</h3>
                 <p><strong>Order Date:</strong> {order.orderDate ? new Date(order.orderDate).toLocaleDateString() : 'N/A'}</p>
                 <p><strong>Total Amount:</strong> {order.totalAmount ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.totalAmount) : 'N/A'}</p>
                 <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
@@ -256,7 +255,7 @@ const Account = () => {
                   {order.cartItemRequests.map((item, index) => (
                     <li key={index} className="order-product-item">
                       <span>
-                        Product: {item.productType === 2 ? 'Charm' : 'Bracelet'}, Quantity: {item.quantity}
+                        Product: {item.productType === 1 ? 'Charm' : 'Bracelet'}, Quantity: {item.quantity}
                       </span>
 
                       <button

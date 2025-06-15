@@ -16,6 +16,7 @@ import CharmDetail from './pages/CharmDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderSuccess from './pages/OrderSuccess';
+import OrderFail from './pages/OrderFail';
 import Admin from './pages/admin/Admin';
 import Register from './pages/Register';
 import Account from './pages/Account';
@@ -96,6 +97,7 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="order-success" element={<OrderSuccess />} />
+            <Route path="order-fail" element={<OrderFail />} />
             <Route path="review-qr" element={<ReviewQR />} />
           </Route>
         </Routes>
