@@ -37,27 +37,31 @@ const NewTrending = () => {
 
 
   const fetchProducts = useCallback(async () => {
-    try {
-      setLoadingProducts(true);
-      setErrorProducts(null);
-      const searchParams = {
-        sortBy: filterSortBy,
-        categoryId: filterCategory || undefined,
-        color: filterColor || undefined,
-        minPrice: filterMinPrice ? parseFloat(filterMinPrice) : undefined,
-        maxPrice: filterMaxPrice ? parseFloat(filterMaxPrice) : undefined,
-      };
-      const response = await ProductService.searchProducts(searchParams);
-      console.log('API response (main products):', response);
-      setProducts(Array.isArray(response) ? response : []);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      setErrorProducts(error.message || 'Failed to fetch products');
-      setProducts([]);
-    } finally {
-      setLoadingProducts(false);
-    }
-  }, [filterSortBy, filterCategory, filterColor, filterMinPrice, filterMaxPrice]);
+  try {
+    setLoadingProducts(true);
+    setErrorProducts(null);
+    const searchParams = {
+      sortBy: filterSortBy,
+      categoryId: filterCategory || undefined,
+      color: filterColor || undefined,
+      minPrice: filterMinPrice ? parseFloat(filterMinPrice) : undefined,
+      maxPrice: filterMaxPrice ? parseFloat(filterMaxPrice) : undefined,
+    };
+    const response = await ProductService.searchProducts(searchParams);
+    console.log('API response (main products):', response);
+    
+    // Lọc ra các sản phẩm có isActive = true
+    const filteredProducts = Array.isArray(response) ? response.filter(product => product.isActive) : [];
+    setProducts(filteredProducts);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    setErrorProducts(error.message || 'Failed to fetch products');
+    setProducts([]);
+  } finally {
+    setLoadingProducts(false);
+  }
+}, [filterSortBy, filterCategory, filterColor, filterMinPrice, filterMaxPrice]);
+
 
   useEffect(() => {
     fetchProducts();
@@ -77,24 +81,28 @@ const NewTrending = () => {
   }, []);
 
   useEffect(() => {
-    const fetchYouMayAlsoLikeCharms = async () => {
-      try {
-        setLoadingYouMayLike(true);
-        setErrorYouMayLike(null);
-        const response = await CharmService.getAllCharms();
-        console.log("Fetched all charms for You May Also Like:", response.data);
-        setYouMayAlsoLikeCharms(response.data || []);
-      } catch (error) {
-        console.error("Error fetching You May Also Like charms:", error);
-        setErrorYouMayLike(error.message || 'Failed to fetch recommended charms');
-        setYouMayAlsoLikeCharms([]);
-      } finally {
-        setLoadingYouMayLike(false);
-      }
-    };
+  const fetchYouMayAlsoLikeCharms = async () => {
+    try {
+      setLoadingYouMayLike(true);
+      setErrorYouMayLike(null);
+      const response = await CharmService.getAllCharms();
+      console.log("Fetched all charms for You May Also Like:", response.data);
 
-    fetchYouMayAlsoLikeCharms();
-  }, []);
+      // Lọc ra các charm có isActive = true
+      const filteredCharms = Array.isArray(response.data) ? response.data.filter(charm => charm.isActive) : [];
+      setYouMayAlsoLikeCharms(filteredCharms);
+    } catch (error) {
+      console.error("Error fetching You May Also Like charms:", error);
+      setErrorYouMayLike(error.message || 'Failed to fetch recommended charms');
+      setYouMayAlsoLikeCharms([]);
+    } finally {
+      setLoadingYouMayLike(false);
+    }
+  };
+
+  fetchYouMayAlsoLikeCharms();
+}, []);
+
 
   const StarRating = ({ rating }) => {
     const totalStars = 5;

@@ -24,10 +24,11 @@ const Charm = () => {
         const response = await CharmService.getAllCharms();
         console.log("Fetched all charms:", response.data);
 
-        // Take the first 4 charms
-        const firstFourCharms = (response.data || []).slice(0, 4);
-        setCharms(firstFourCharms);
+        // Lọc ra các charm có isActive = true và lấy 4 charm đầu tiên
+        const activeCharms = (response.data || []).filter(charm => charm.isActive);
+        const firstFourActiveCharms = activeCharms.slice(0, 4);
 
+        setCharms(firstFourActiveCharms);
       } catch (error) {
         console.error("Error fetching charms:", error);
         setError(error.message || 'Failed to fetch charms');
@@ -39,6 +40,7 @@ const Charm = () => {
 
     fetchCharms();
   }, []);
+
 
   return (
     <div className="charm">
@@ -88,7 +90,7 @@ const Charm = () => {
         </div>
       </section>
 
-      <div style={{padding: '0 40px'}}>
+      <div style={{ padding: '0 40px' }}>
         {/* Add Some Charm Section */}
         <section className="charm__add-charm">
           <div className="charm__add-charm-content">

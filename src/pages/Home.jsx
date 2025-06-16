@@ -44,11 +44,15 @@ const Home = () => {
         setErrorCharms(null);
         const response = await CharmService.getAllCharms();
         console.log("Fetched all charms for best sellers:", response.data);
-        setCharmBestSellers(response.data || []);
+
+        // Lọc ra các charm có isActive = true
+        const activeBestSellers = (response.data || []).filter(charm => charm.isActive);
+
+        setCharmBestSellers(activeBestSellers);
       } catch (error) {
         console.error("Error fetching charms:", error);
         setErrorCharms(error.message || 'Failed to fetch charms');
-        setCharmBestSellers([]);
+        setCharmBestSellers([]); // Ensure charmBestSellers is an empty array on error
       } finally {
         setLoadingCharms(false);
       }
@@ -56,6 +60,7 @@ const Home = () => {
 
     fetchCharmBestSellers();
   }, []);
+
 
   useEffect(() => {
     const fetchShopTheLookProducts = async () => {

@@ -99,7 +99,10 @@ const Custom = () => {
       };
       const response = await CharmService.searchCharms(searchParams);
       console.log("Fetched charms with filters:", response.data);
-      setCharmProducts(response.data || []);
+
+      // Lọc ra các charm có isActive = true
+      const filteredCharms = Array.isArray(response.data) ? response.data.filter(charm => charm.isActive) : [];
+      setCharmProducts(filteredCharms);
     } catch (error) {
       console.error("Error fetching charm products with filters:", error);
       setErrorCharms(error.message || 'Failed to fetch charm products');
@@ -108,6 +111,7 @@ const Custom = () => {
       setLoadingCharms(false);
     }
   };
+
 
   const fetchCharmCategories = async () => {
     try {
@@ -134,7 +138,10 @@ const Custom = () => {
         setErrorYouMayLike(null);
         const response = await ProductService.getAllProducts();
         console.log("Fetched all products for You May Also Like:", response);
-        setYouMayAlsoLikeProducts(response || []);
+
+        // Lọc ra các sản phẩm có isActive = true
+        const filteredProducts = Array.isArray(response) ? response.filter(product => product.isActive) : [];
+        setYouMayAlsoLikeProducts(filteredProducts);
       } catch (error) {
         console.error("Error fetching You May Also Like products:", error);
         setErrorYouMayLike(error.message || 'Failed to fetch recommended products');
@@ -146,6 +153,7 @@ const Custom = () => {
 
     fetchYouMayAlsoLikeProducts();
   }, []);
+
 
   useEffect(() => {
     // Scroll to section if hash exists
