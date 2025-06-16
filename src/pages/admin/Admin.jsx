@@ -11,7 +11,9 @@ const Admin = () => {
       {/* Sidebar */}
       <aside className="admin-sidebar">
         <div className="logo">
-          <img src={"/images/logo.svg"} alt="logo" />
+          <Link to="/">
+            <img src={"/images/logo.svg"} alt="logo" />
+          </Link>
         </div>
         <nav className="admin-nav">
           <ul className="admin-nav-list">
