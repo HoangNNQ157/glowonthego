@@ -18,10 +18,15 @@ function Accounts() {
     setLoading(true);
     try {
       const res = await AuthService.getAllUsers();
-      setUsers(res || []);
-    } catch (e) { console.error(e); }
+      // Lọc ra người dùng có status là true
+      const activeUsers = res.filter(user => user.status === true);
+      setUsers(activeUsers || []);
+    } catch (e) {
+      console.error(e);
+    }
     setLoading(false);
   };
+
 
   useEffect(() => {
     fetchUsers();
