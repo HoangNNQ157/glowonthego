@@ -12,22 +12,22 @@ import AuthService from '../services/auth.service';
 const PAIRS_WELL_WITH = [
   {
     name: 'Grace',
-    price: '429.000₫',
+
     image: '/images/charm__large.png',
   },
   {
     name: 'Bow Charm',
-    price: '109.000₫',
+
     image: '/images/charm__large.png',
   },
   {
     name: 'Custom Tiny Words Bracelet',
-    price: '429.000₫',
+
     image: '/images/charm__large.png',
   },
   {
     name: 'You Can',
-    price: '399.000₫',
+    
     image: '/images/charm__large.png',
   },
 ];
@@ -76,36 +76,39 @@ const ProductDetail = () => {
         const relatedItemsResponse = await ProductService.getAllProducts();
         console.log("Fetched all products for related:", relatedItemsResponse);
 
-        const filteredRelated = (relatedItemsResponse || []).filter(item => item.id !== currentProduct.id);
-        setRelatedProducts(filteredRelated);
+        // Lọc sản phẩm có isActive = true và id khác id của sản phẩm hiện tại
+        const filteredRelated = (relatedItemsResponse || [])
+          .filter(item => item.id !== currentProduct.id && item.isActive === true); // Thêm điều kiện isActive
+
+        setRelatedProducts(filteredRelated);  // Cập nhật state với các sản phẩm đã lọc
 
       } catch (err) {
         console.error("Error fetching related items:", err);
-        setRelatedProducts([]);
+        setRelatedProducts([]);  // Nếu có lỗi, đặt lại mảng sản phẩm liên quan về rỗng
       }
     };
 
-    fetchProductDetail();
+    fetchProductDetail();  // Gọi hàm lấy thông tin chi tiết sản phẩm
 
   }, [id]);
 
   const handleAddToCart = () => {
-  if (!productDetail) return;
+    if (!productDetail) return;
 
-  if (quantity > productDetail.quantity) {
-    toast.error('Not enough stock available.');
-    return;
-  }
+    if (quantity > productDetail.quantity) {
+      toast.error('Not enough stock available.');
+      return;
+    }
 
-  const itemToAdd = {
-    productType: 2,
-    productId: productDetail.id,
-    quantity: quantity,
+    const itemToAdd = {
+      productType: 2,
+      productId: productDetail.id,
+      quantity: quantity,
+    };
+
+    CartService.addItem(itemToAdd);
+    toast.success(`${productDetail.braceleteName} added to cart!`);
   };
-
-  CartService.addItem(itemToAdd);
-  toast.success(`${productDetail.braceleteName} added to cart!`);
-};
 
 
   // const handleReviewSubmit = async (e) => {

@@ -65,26 +65,32 @@ const Home = () => {
   useEffect(() => {
     const fetchShopTheLookProducts = async () => {
       try {
+        // Đặt loading thành true khi bắt đầu gọi API
         setLoadingProducts(true);
         setErrorProducts(null);
-        const response = await CharmService.getAllCharms();
-        console.log("Fetched all charms for shop the look:", response.data);
 
-        // Take the first 3 charms
-        const firstThreeItems = (response.data || []).slice(0, 3);
-        setShopTheLookProducts(firstThreeItems);
+        // Gọi API để lấy tất cả sản phẩm
+        const response = await ProductService.getAllProducts();
+        console.log("Fetched all products for shop the look:", response);  // Log phản hồi từ API
 
+        // Lọc các sản phẩm có isActive = true và lấy 2 sản phẩm đầu tiên
+        const firstTwoItems = (response || []).filter(item => item.isActive === true).slice(0, 2);
+
+        // Cập nhật trạng thái với sản phẩm đã lọc
+        setShopTheLookProducts(firstTwoItems);
       } catch (error) {
-        console.error("Error fetching charms for shop the look:", error);
+        console.error("Error fetching products for shop the look:", error);
         setErrorProducts(error.message || 'Failed to fetch items for shop the look');
-        setShopTheLookProducts([]);
+        setShopTheLookProducts([]);  // Nếu có lỗi, đặt mảng sản phẩm về rỗng
       } finally {
+        // Khi hoàn tất, đặt loading thành false
         setLoadingProducts(false);
       }
     };
 
-    fetchShopTheLookProducts();
+    fetchShopTheLookProducts();  // Gọi hàm khi component được render lần đầu
   }, []);
+
 
   // Duplicate slogans for continuous scroll effect
   const duplicatedSlogans = [...slogans, ...slogans, ...slogans];
@@ -170,18 +176,25 @@ const Home = () => {
             <div>No items available for shop the look.</div>
           ) : (
             shopTheLookProducts.map((item) => (
-              <Link to={`/charm/${item.id}`} key={item.id} style={{ textDecoration: 'none' }}>
+              <Link to={`/product/${item.id}`} key={item.id} style={{ textDecoration: 'none' }}>
                 <div className="shop-look-card">
-                  <img src={item.image} alt={item.charmName} className="shop-look-card__img" />
+                  <img
+                    src={item.image || '/images/default-image.png'}
+                    alt={item.braceleteName || 'Bracelet'}
+                    className="shop-look-card__img"
+                  />
                   <div>
-                    <div className="shop-look-card__name">{item.charmName}</div>
-                    <div className="shop-look-card__price">{item.price.toLocaleString('vi-VN')}₫</div>
+                    <div className="shop-look-card__name">{item.braceleteName || 'No Name'}</div>
+                    <div className="shop-look-card__price">
+                      {item.price ? item.price.toLocaleString('vi-VN') : 'Price not available'}
+                    </div>
                     <button className="shop-look-card__add">ADD TO CART</button>
                   </div>
                 </div>
               </Link>
             ))
           )}
+
         </div>
       </section>
 

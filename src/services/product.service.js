@@ -7,6 +7,7 @@ const ProductService = {
         return response.data;
     },
 
+
     getProductById: async (id) => {
         const response = await axiosInstance.get(`/bracelete/${id}`);
         return response.data;
