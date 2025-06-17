@@ -13,22 +13,22 @@ import { toast } from 'react-toastify'; // Import toast
 const PAIRS_WELL_WITH = [
   {
     name: 'Grace',
-    price: '429.000₫',
+
     image: '/images/charm__large.png',
   },
   {
     name: 'Bow Charm',
-    price: '109.000₫',
+
     image: '/images/charm__large.png',
   },
   {
     name: 'Custom Tiny Words Bracelet',
-    price: '429.000₫',
+
     image: '/images/charm__large.png',
   },
   {
     name: 'You Can',
-    price: '399.000₫',
+
     image: '/images/charm__large.png',
   },
 ];
@@ -73,42 +73,45 @@ const CharmDetail = () => { // Renamed component
       }
     };
 
-    const fetchRelatedCharms = async (currentCharm) => { // Renamed function and parameter
+    const fetchRelatedCharms = async (currentCharm) => { // Đổi tên hàm và tham số cho phù hợp
       try {
-        const relatedItemsResponse = await CharmService.getAllCharms(); // Use CharmService
+        const relatedItemsResponse = await CharmService.getAllCharms(); // Gọi API CharmService
         console.log("Fetched all charms for related:", relatedItemsResponse.data);
 
-        // Filter out the current charm from the related items, add safety check
-        const filteredRelated = (relatedItemsResponse.data || []).filter(item => item.id !== currentCharm.id);
-        setRelatedCharms(filteredRelated);
+        // Lọc các charms có isActive = true và id khác với id của charm hiện tại
+        const filteredRelated = (relatedItemsResponse.data || [])
+          .filter(item => item.id !== currentCharm.id && item.isActive === true);  // Thêm điều kiện isActive
+
+        setRelatedCharms(filteredRelated); // Cập nhật state với các charm đã lọc
 
       } catch (err) {
-        console.error("Error fetching related charms:", err); // Update error message
-        setRelatedCharms([]); // Ensure relatedCharms is always an array
+        console.error("Error fetching related charms:", err); // Cập nhật thông báo lỗi
+        setRelatedCharms([]); // Đảm bảo relatedCharms luôn là một mảng rỗng nếu có lỗi
       }
     };
+
 
     fetchCharmDetail();
 
   }, [id]); // isCharm dependency removed
 
   const handleAddToCart = () => {
-  if (!charmDetail) return;
+    if (!charmDetail) return;
 
-  if (selectedQuantity > charmDetail.quantity) {
-    toast.error('Not enough stock available.');
-    return;
-  }
+    if (selectedQuantity > charmDetail.quantity) {
+      toast.error('Not enough stock available.');
+      return;
+    }
 
-  const cartItem = {
-    productId: charmDetail.id,
-    productType: 1,
-    quantity: selectedQuantity,
+    const cartItem = {
+      productId: charmDetail.id,
+      productType: 1,
+      quantity: selectedQuantity,
+    };
+
+    CartService.addItem(cartItem);
+    toast.success(`${charmDetail.charmName} added to cart!`);
   };
-
-  CartService.addItem(cartItem);
-  toast.success(`${charmDetail.charmName} added to cart!`);
-};
 
 
   // const handleReviewSubmit = async (e) => {
@@ -147,7 +150,7 @@ const CharmDetail = () => { // Renamed component
           <div className="product-detail__gallery">
             <div className="product-detail__image">
               <img src={charmDetail.image} alt={charmDetail.charmName} /> {/* Use charmDetail properties */}
-              <button className="product-detail__slider-next"></button>
+              {/* <button className="product-detail__slider-next"></button> */}
             </div>
           </div>
           <div className="product-detail__info">

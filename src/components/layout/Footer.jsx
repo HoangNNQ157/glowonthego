@@ -35,7 +35,7 @@ const Footer = () => {
             </div>
 
             {/* App Download */}
-            <div className="footer__app-download">
+            {/* <div className="footer__app-download">
               <div className="footer__app-title">DOWNLOAD OUR APP!</div>
               <div className="footer__app-links">
                 <a href="#" className="footer__app-link">
@@ -45,7 +45,7 @@ const Footer = () => {
                   <img src="/images/ggplay.png" alt="Get it on Google Play" />
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Navigation Links */}
