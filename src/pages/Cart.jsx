@@ -71,7 +71,9 @@ export default function Cart() {
       const allCharmsResponse = await CharmService.getAllCharms();
       const allCharms = allCharmsResponse.data || [];
 
-      setYouMayAlsoLikeItems(allCharms.slice(0, 5));
+      const activeCharms = allCharms.filter(item => item.isActive === true);
+
+      setYouMayAlsoLikeItems(activeCharms.slice(0, 100));
       // setHandpickedCharms(allCharms.slice(5, 8));
 
     } catch (err) {
@@ -161,7 +163,7 @@ export default function Cart() {
             ) : (
               cartItems.map(item => (
                 <div className="cart-item" key={`${item.productType}-${item.productId}`}>
-                  <div className="cart-item__img"><img src={item.image}/></div>
+                  <div className="cart-item__img"><img src={item.image} /></div>
                   <div className="cart-item__info">
                     <div className="cart-item__name">
                       {item.name || item.charmName || item.braceleteName || 'Tên chưa có'}
