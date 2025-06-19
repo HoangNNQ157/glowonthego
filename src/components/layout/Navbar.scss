@@ -35,9 +35,21 @@
     border: none;
     padding: 0.5rem;
     cursor: pointer;
+    z-index: 1001;
 
-    @media (max-width: $breakpoint-md) {
+    @media (max-width: 768px) {
       display: block;
+    }
+
+    &--active {
+      .header__menu-icon {
+        &::before {
+          transform: rotate(45deg) translate(5px, 5px);
+        }
+        &::after {
+          transform: rotate(-45deg) translate(5px, -5px);
+        }
+      }
     }
   }
 
@@ -45,7 +57,7 @@
     display: block;
     width: 24px;
     height: 2px;
-    background-color: $text-color;
+    background-color: #000;
     position: relative;
     transition: background-color 0.3s;
 
@@ -55,7 +67,7 @@
       position: absolute;
       width: 24px;
       height: 2px;
-      background-color: $text-color;
+      background-color: #000;
       transition: transform 0.3s;
     }
 
@@ -152,5 +164,97 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+// Mobile Drawer Styles
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s;
+
+  &--open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  &__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background-color: white;
+    padding: 2rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto;
+
+    .mobile-drawer--open & {
+      transform: translateX(0);
+    }
+  }
+
+  &__close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__nav {
+    margin-top: 3rem;
+  }
+
+  &__nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__nav-item {
+    margin-bottom: 1.5rem;
+  }
+
+  &__nav-link {
+    color: #000;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: block;
+    padding: 0.5rem 0;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #6c63ff;
+    }
+  }
+}
+
+// Hide primary nav on mobile
+@media (max-width: 768px) {
+  .header__nav--primary {
+    display: none;
   }
 } 

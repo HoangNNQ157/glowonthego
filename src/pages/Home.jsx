@@ -91,7 +91,6 @@ const Home = () => {
     fetchShopTheLookProducts();  // Gọi hàm khi component được render lần đầu
   }, []);
 
-
   // Duplicate slogans for continuous scroll effect
   const duplicatedSlogans = [...slogans, ...slogans, ...slogans];
 
@@ -104,7 +103,7 @@ const Home = () => {
 
       {/* Best Sellers */}
       <section className="home__best-sellers">
-        <div className="flex-grow container mx-auto px-4 py-8">
+        <div className="flex-grow container mx-auto">
           <h2 className="home__section-title">Best Sellers</h2>
           {loadingCharms ? (
             <div>Loading charms...</div>
@@ -117,6 +116,23 @@ const Home = () => {
               slidesPerView={4}
               spaceBetween={20}
               pagination={{ clickable: true }}
+              breakpoints={{
+                // when window width is >= 1200px
+                1200: {
+                  slidesPerView: 4,
+                  spaceBetween: 20
+                },
+                // when window width is >= 768px and < 1200px
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 15
+                },
+                // when window width is < 768px
+                0: {
+                  slidesPerView: 2,
+                  spaceBetween: 10
+                }
+              }}
               className="mySwiper"
             >
               {charmBestSellers.map((item) => (
@@ -158,44 +174,44 @@ const Home = () => {
 
       {/* Shop The Look */}
       <section className="home__shop-look">
+        <>
+          <div className="home__shop-look-img">
+            <img src="/images/home_2.png" alt="Shop The Look" />
+            <Link to="/custom#custom__products-section" className="home__shop-now-btn">
+              SHOP NOW
+            </Link>
+          </div>
 
-        <div className="home__shop-look-img">
-          <img src="/images/home_2.png" alt="Shop The Look" />
-          <Link to="/custom#custom__products-section" className="home__shop-now-btn">
-            SHOP NOW
-          </Link>
-        </div>
-
-        <div className="home__shop-look-list">
-          <h3>Shop The Look</h3>
-          {loadingProducts ? (
-            <div>Loading items...</div>
-          ) : errorProducts ? (
-            <div style={{ color: 'red' }}>{errorProducts}</div>
-          ) : shopTheLookProducts.length === 0 ? (
-            <div>No items available for shop the look.</div>
-          ) : (
-            shopTheLookProducts.map((item) => (
-              <Link to={`/product/${item.id}`} key={item.id} style={{ textDecoration: 'none' }}>
-                <div className="shop-look-card">
-                  <img
-                    src={item.image || '/images/default-image.png'}
-                    alt={item.braceleteName || 'Bracelet'}
-                    className="shop-look-card__img"
-                  />
-                  <div>
-                    <div className="shop-look-card__name">{item.braceleteName || 'No Name'}</div>
-                    <div className="shop-look-card__price">
-                      {item.price ? item.price.toLocaleString('vi-VN') : 'Price not available'}
+          <div className="home__shop-look-list">
+            <h3>Shop The Look</h3>
+            {loadingProducts ? (
+              <div>Loading items...</div>
+            ) : errorProducts ? (
+              <div style={{ color: 'red' }}>{errorProducts}</div>
+            ) : shopTheLookProducts.length === 0 ? (
+              <div>No items available for shop the look.</div>
+            ) : (
+              shopTheLookProducts.map((item) => (
+                <Link to={`/product/${item.id}`} key={item.id} style={{ textDecoration: 'none' }}>
+                  <div className="shop-look-card">
+                    <img
+                      src={item.image || '/images/default-image.png'}
+                      alt={item.braceleteName || 'Bracelet'}
+                      className="shop-look-card__img"
+                    />
+                    <div>
+                      <div className="shop-look-card__name">{item.braceleteName || 'No Name'}</div>
+                      <div className="shop-look-card__price">
+                        {item.price ? item.price.toLocaleString('vi-VN') : 'Price not available'}
+                      </div>
+                      <button className="shop-look-card__add">ADD TO CART</button>
                     </div>
-                    <button className="shop-look-card__add">ADD TO CART</button>
                   </div>
-                </div>
-              </Link>
-            ))
-          )}
-
-        </div>
+                </Link>
+              ))
+            )}
+          </div>
+        </>
       </section>
 
       {/* Your Story Section */}
@@ -324,14 +340,16 @@ const Home = () => {
 
       {/* Visit Store Section */}
       <section className="home__visit-store">
-        <div className="home__visit-store-background">
-          {/* Background image will be set in CSS */}
-        </div>
-        <div className="home__visit-store-content">
-          <div className="home__visit-store-card">
-            {/* <button className="home__visit-store-button">OUR STORES</button> */}
+        <>
+          <div className="home__visit-store-background">
+            {/* Background image will be set in CSS */}
           </div>
-        </div>
+          <div className="home__visit-store-content">
+            <div className="home__visit-store-card">
+              {/* <button className="home__visit-store-button">OUR STORES</button> */}
+            </div>
+          </div>
+        </>
       </section>
 
       {/* Instagram Section */}
