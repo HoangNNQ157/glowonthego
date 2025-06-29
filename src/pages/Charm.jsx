@@ -94,8 +94,8 @@ const Charm = () => {
         {/* Add Some Charm Section */}
         <section className="charm__add-charm">
           <div className="charm__add-charm-content">
-            <h2>Add Some Charm</h2>
-            <p>to customize your Glow™</p>
+            {/* <h2>Add Some Charm</h2>
+            <p>to customize your Glow™</p> */}
             {/* <button className="charm__add-charm-button">CUSTOMIZE</button> */}
           </div>
         </section>
