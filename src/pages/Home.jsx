@@ -176,7 +176,7 @@ const Home = () => {
       <section className="home__shop-look">
         <>
           <div className="home__shop-look-img">
-            <img src="/images/home_2.png" alt="Shop The Look" />
+            <img src="/images/home2.png" alt="Shop The Look" />
             <Link to="/custom#custom__products-section" className="home__shop-now-btn">
               SHOP NOW
             </Link>

@@ -343,7 +343,7 @@ const Custom = () => {
 
       {/* Banner Section */}
       <div className="custom__banner">
-        <img src="/images/custom.png" alt="Custom Banner" /> {/* Placeholder image */}
+        <img src="/images/Container.png" alt="Custom Banner" /> {/* Placeholder image */}
         <div className="custom__banner-overlay">
         </div>
       </div>
