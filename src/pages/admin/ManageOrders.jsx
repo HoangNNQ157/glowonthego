@@ -16,15 +16,24 @@ const ManageOrders = () => {
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [shippers, setShippers] = useState([]);
-  const [assigning, setAssigning] = useState({}); // { [orderId]: boolean }
-
-
+  const [assigning, setAssigning] = useState({});
+  const [localDeliveryStatus, setLocalDeliveryStatus] = useState({});
+  const [localPaymentStatus, setLocalPaymentStatus] = useState({});
 
   const fetchOrders = async () => {
     setLoading(true);
     try {
       const res = await OrderService.getAllOrders();
       setOrders(res || []);
+
+      const deliveryMap = {};
+      const paymentMap = {};
+      (res || []).forEach(order => {
+        deliveryMap[order.id] = Number(order.deliveryStatus ?? 0);
+        paymentMap[order.id] = Number(order.paymentStatus ?? 0);
+      });
+      setLocalDeliveryStatus(deliveryMap);
+      setLocalPaymentStatus(paymentMap);
     } catch {
       toast.error('Không thể tải đơn hàng');
     }
@@ -48,7 +57,10 @@ const ManageOrders = () => {
     }
   };
 
-  useEffect(() => { fetchOrders(); fetchShippers(); }, []);
+  useEffect(() => {
+    fetchOrders();
+    fetchShippers();
+  }, []);
 
   const handleDetail = order => setSelectedOrder(order);
 
@@ -63,33 +75,76 @@ const ManageOrders = () => {
     }
   };
 
-  // Gán đơn hàng cho shipper
   const handleAssignShipper = async (orderId, shipperId) => {
     setAssigning(a => ({ ...a, [orderId]: true }));
     try {
       await DeliveryService.createAndAssignDelivery(shipperId, [orderId]);
       toast.success('Đã gán đơn cho shipper!');
-      fetchOrders();
+      setOrders(prev =>
+        prev.map(order =>
+          order.id === orderId ? { ...order, shipperId } : order
+        )
+      );
+      // Reset UI trạng thái nếu backend thay đổi ngầm
+      setLocalDeliveryStatus(prev => ({ ...prev, [orderId]: 0 }));
+      setLocalPaymentStatus(prev => ({ ...prev, [orderId]: 0 }));
     } catch (error) {
-      console.error('Error assigning shipper:', error);
       toast.error('Không thể gán đơn!');
     }
     setAssigning(a => ({ ...a, [orderId]: false }));
   };
 
-  // Cập nhật trạng thái giao hàng và thanh toán
-  const handleUpdateDelivery = async (orderId, deliveryStatus, paymentStatus) => {
+  const handleUpdateDeliveryStatus = async (orderId, deliveryStatus) => {
     setAssigning(a => ({ ...a, [orderId]: true }));
+    const paymentStatus = localPaymentStatus[orderId] ?? 0;
     try {
-      await DeliveryService.updateDeliveryStatus(orderId, { deliveryStatus, paymentStatus });
-      toast.success('Cập nhật trạng thái thành công!');
-      fetchOrders();
-    } catch (error) {
-      console.error('Error updating delivery status:', error);
-      toast.error('Không thể cập nhật trạng thái!');
+      await DeliveryService.updateDeliveryStatus(orderId, {
+        deliveryStatus,
+        paymentStatus
+      });
+      toast.success('Cập nhật trạng thái giao hàng thành công!');
+      setLocalDeliveryStatus(prev => ({
+        ...prev,
+        [orderId]: deliveryStatus,
+      }));
+    } catch {
+      toast.error('Không thể cập nhật trạng thái giao hàng!');
     }
     setAssigning(a => ({ ...a, [orderId]: false }));
   };
+
+  const handleUpdatePaymentStatus = async (orderId, paymentStatus) => {
+    setAssigning(a => ({ ...a, [orderId]: true }));
+    const deliveryStatus = localDeliveryStatus[orderId] ?? 0;
+    try {
+      await DeliveryService.updateDeliveryStatus(orderId, {
+        deliveryStatus,
+        paymentStatus
+      });
+      toast.success('Cập nhật trạng thái thanh toán thành công!');
+      setLocalPaymentStatus(prev => ({
+        ...prev,
+        [orderId]: paymentStatus,
+      }));
+    } catch {
+      toast.error('Không thể cập nhật trạng thái thanh toán!');
+    }
+    setAssigning(a => ({ ...a, [orderId]: false }));
+  };
+
+  const deliveryStatusOptions = [
+    { value: 0, label: 'Đã chuẩn bị' },
+    { value: 1, label: 'Đang giao' },
+    { value: 2, label: 'Đã giao' },
+    { value: 3, label: 'Giao thất bại' },
+    { value: 4, label: 'Đã hủy' },
+  ];
+
+  const paymentStatusOptions = [
+    { value: 0, label: 'Chưa thanh toán' },
+    { value: 1, label: 'Đã thanh toán' },
+    { value: 2, label: 'Thanh toán thất bại' },
+  ];
 
   return (
     <div className="manage-material-container">
@@ -142,20 +197,36 @@ const ManageOrders = () => {
                 <td>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                     <select
-                      value={order.deliveryStatus || 0}
-                      onChange={e => handleUpdateDelivery(order.id, Number(e.target.value), order.paymentStatus || 0)}
+                      value={localDeliveryStatus[order.id] ?? 0}
+                      onChange={e => {
+                        const newVal = Number(e.target.value);
+                        setLocalDeliveryStatus(prev => ({
+                          ...prev,
+                          [order.id]: newVal,
+                        }));
+                        handleUpdateDeliveryStatus(order.id, newVal);
+                      }}
                       disabled={assigning[order.id]}
                     >
-                      <option value={0}>Chưa giao</option>
-                      <option value={1}>Đã giao</option>
+                      {deliveryStatusOptions.map(opt => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      ))}
                     </select>
                     <select
-                      value={order.paymentStatus || 0}
-                      onChange={e => handleUpdateDelivery(order.id, order.deliveryStatus || 0, Number(e.target.value))}
+                      value={localPaymentStatus[order.id] ?? 0}
+                      onChange={e => {
+                        const newVal = Number(e.target.value);
+                        setLocalPaymentStatus(prev => ({
+                          ...prev,
+                          [order.id]: newVal,
+                        }));
+                        handleUpdatePaymentStatus(order.id, newVal);
+                      }}
                       disabled={assigning[order.id]}
                     >
-                      <option value={0}>Chưa thanh toán</option>
-                      <option value={1}>Đã thanh toán</option>
+                      {paymentStatusOptions.map(opt => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      ))}
                     </select>
                   </div>
                 </td>
@@ -173,26 +244,31 @@ const ManageOrders = () => {
           </tbody>
         </table>
       )}
-      {/* Modal chi tiết đơn hàng */}
       {selectedOrder && (
         <div className="modal">
           <div className="modal-content">
             <h2>Chi tiết đơn hàng #{selectedOrder.id}</h2>
             <div className="order-detail-info">
+              <div><b>Tên:</b> {selectedOrder.userName}</div>
               <div><b>Địa chỉ:</b> {selectedOrder.address}</div>
               <div><b>SĐT:</b> {selectedOrder.phoneNumber}</div>
+              <div><b>Thời Gian:</b> {new Date(selectedOrder.orderDate).toLocaleString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+              })}</div>
+
               <div><b>Ghi chú:</b> {selectedOrder.note}</div>
               <div><b>Thanh toán:</b> {selectedOrder.paymentMethod}</div>
+              <div><b>Giá:</b> {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(selectedOrder.totalAmount)}</div>
               <div><b>Giảm giá:</b> {selectedOrder.amountDiscount}</div>
-              <div>
-                <b>Sản Phẩm</b>{' '}
-                {selectedOrder.productType === 1 ? 'Charm' : 'Bracelet'}
-              </div>
-              <div>
-                <b>Vận Chuyển:</b>{' '}
-                {selectedOrder.deliveryStatus === 1 ? 'Đã giao' : 'Chưa giao'}
-              </div>
-
+              <div><b>Sản Phẩm:</b> {selectedOrder.productType === 1 ? 'Charm' : 'Bracelet'}</div>
+              <div><b>Vận Chuyển:</b> {
+                deliveryStatusOptions.find(d => d.value === selectedOrder.deliveryStatus)?.label ?? 'Không xác định'
+              }</div>
               <div><b>Sản phẩm:</b>
                 <ul className="order-items-list">
                   {selectedOrder.cartItemRequests.map((item, idx) => (
@@ -212,4 +288,4 @@ const ManageOrders = () => {
   );
 };
 
-export default ManageOrders; 
+export default ManageOrders;
