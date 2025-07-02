@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with default configuration
 const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'http://157.66.219.183:8080/api',
+    baseURL: '/api',
     timeout: 10000,
     headers: {
         // Removed default Content-Type and Accept headers
