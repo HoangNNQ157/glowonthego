@@ -33,18 +33,22 @@ const ManageOrders = () => {
   const [assigning, setAssigning] = useState({});
   const [localDeliveryStatus, setLocalDeliveryStatus] = useState({});
   const [localPaymentStatus, setLocalPaymentStatus] = useState({});
-  const [currentPage, setCurrentPage] = useState(1); // Thêm phân trang
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const fetchOrders = async () => {
     setLoading(true);
     try {
       const res = await OrderService.getAllOrders();
+
       const sortedOrders = (res || []).sort((a, b) => {
         const aPriority = (a.deliveryStatus === 2 || a.paymentStatus === 1) ? 1 : 0;
         const bPriority = (b.deliveryStatus === 2 || b.paymentStatus === 1) ? 1 : 0;
-        return bPriority - aPriority;
+
+        if (aPriority !== bPriority) return bPriority - aPriority;
+        return b.id - a.id;
       });
+
       setOrders(sortedOrders);
 
       const deliveryMap = {};
@@ -145,7 +149,6 @@ const ManageOrders = () => {
 
   const handleDetail = order => setSelectedOrder(order);
 
-  // Phân trang
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentOrders = orders.slice(indexOfFirstItem, indexOfLastItem);
@@ -258,7 +261,6 @@ const ManageOrders = () => {
             </tbody>
           </table>
 
-          {/* Phân trang */}
           {totalPages > 1 && (
             <div className="pagination">
               <button
@@ -280,7 +282,6 @@ const ManageOrders = () => {
               </button>
             </div>
           )}
-
         </>
       )}
 

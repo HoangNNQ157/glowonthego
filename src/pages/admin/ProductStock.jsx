@@ -1,47 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { FaPlus, FaSearch, FaCalendarAlt } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import StockTable from '../../components/admin/stock/StockTable';
 import SalesChart from '../../components/admin/stock/SalesChart';
-import TableControls from '../../components/admin/stock/TableControls';
 import ProductService from '../../services/product.service';
 import CharmService from '../../services/charm.service';
 import { toast } from 'react-toastify';
 import '../../styles/admin/stock.scss';
 
+
 const ProductStock = () => {
-  const [activeType, setActiveType] = useState('BRACELET'); // Default to Bracelet
+  const [activeType, setActiveType] = useState('BRACELET');
   const [inventoryData, setInventoryData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 10;
+
+  const fetchInventory = async () => {
+    setIsLoading(true);
+    try {
+      let response;
+      if (activeType === 'BRACELET') {
+        response = await ProductService.getBraceletInventory();
+      } else {
+        response = await CharmService.getCharmInventory();
+      }
+      const data = response?.data || [];
+      setInventoryData(data);
+    } catch (error) {
+      console.error(`Error fetching ${activeType} inventory:`, error);
+      toast.error(`Không thể tải tồn kho ${activeType === 'BRACELET' ? 'Vòng tay' : 'Charm'}.`);
+      setInventoryData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchInventory = async () => {
-      setIsLoading(true);
-      try {
-        let data;
-        if (activeType === 'BRACELET') {
-          const response = await ProductService.getBraceletInventory();
-          data = response.data;
-        } else {
-          const response = await CharmService.getCharmInventory();
-          data = response.data;
-        }
-        setInventoryData(Array.isArray(data) ? data : []);
-        console.log('Fetched inventory data:', data);
-        console.log('Inventory data in state:', Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error(`Error fetching ${activeType} inventory:`, error);
-        toast.error(`Không thể tải tồn kho ${activeType === 'BRACELET' ? 'Vòng tay' : 'Charm'}.`);
-        setInventoryData([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
+    setCurrentPage(1); // Reset to page 1 when switching type
     fetchInventory();
   }, [activeType]);
 
+  const paginatedData = inventoryData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  const totalPages = Math.ceil(inventoryData.length / itemsPerPage);
+
   const handleAddStock = async (id, name) => {
-    const quantity = prompt(`Nhập số lượng để thêm vào kho cho ${name}:`);
+    const quantity = prompt(`Nhập số lượng để thêm vào kho cho ${name || 'sản phẩm'}:`);
     if (quantity === null || isNaN(quantity) || quantity <= 0) {
       toast.info('Số lượng không hợp lệ.');
       return;
@@ -54,14 +61,10 @@ const ProductStock = () => {
         await CharmService.addCharmStock(id, parseInt(quantity));
       }
       toast.success('Thêm tồn kho thành công!');
-      // Refresh data after successful add
-      const response = activeType === 'BRACELET' 
-        ? await ProductService.getBraceletInventory()
-        : await CharmService.getCharmInventory();
-      setInventoryData(Array.isArray(response.data) ? response.data : []);
+      fetchInventory();
     } catch (error) {
-      console.error(`Error adding stock for ${activeType}:`, error);
-      toast.error(`Không thể thêm tồn kho ${activeType === 'BRACELET' ? 'Vòng tay' : 'Charm'}.`);
+      console.error(`Error adding stock:`, error);
+      toast.error(`Không thể thêm tồn kho.`);
     }
   };
 
@@ -71,21 +74,18 @@ const ProductStock = () => {
       toast.info('Số lượng không hợp lệ.');
       return;
     }
-    console.log(`Distributing ${activeType} - ID: ${id}, Quantity: ${parseInt(quantity)}`);
+
     try {
-        if (activeType === 'BRACELET') {
-            await ProductService.addBraceleteQuantity(id, parseInt(quantity));
-        } else {
-            await CharmService.addCharmQuantity(id, parseInt(quantity));
-        }
-        toast.success('Phân phối thành công!');
-        const response = activeType === 'BRACELET' 
-            ? await ProductService.getBraceletInventory()
-            : await CharmService.getCharmInventory();
-        setInventoryData(Array.isArray(response.data) ? response.data : []);
+      if (activeType === 'BRACELET') {
+        await ProductService.addBraceleteQuantity(id, parseInt(quantity));
+      } else {
+        await CharmService.addCharmQuantity(id, parseInt(quantity));
+      }
+      toast.success('Phân phối thành công!');
+      fetchInventory();
     } catch (error) {
-        console.error(`Error distributing ${activeType}:`, error);
-        toast.error(error.response?.data?.message || `Không thể phân phối ${activeType === 'BRACELET' ? 'Vòng tay' : 'Charm'}.`);
+      console.error(`Error distributing stock:`, error);
+      toast.error(error.response?.data?.message || 'Không thể phân phối tồn kho.');
     }
   };
 
@@ -95,21 +95,18 @@ const ProductStock = () => {
       toast.info('Số lượng không hợp lệ.');
       return;
     }
-    console.log(`Updating ${activeType} Quantity - ID: ${id}, New Quantity: ${parseInt(newQuantity)}`);
+
     try {
-        if (activeType === 'BRACELET') {
-            await ProductService.updateBraceleteQuantity(id, parseInt(newQuantity));
-        } else {
-            await CharmService.updateCharmQuantity(id, parseInt(newQuantity));
-        }
-        toast.success('Cập nhật số lượng thành công!');
-        const response = activeType === 'BRACELET' 
-            ? await ProductService.getBraceletInventory()
-            : await CharmService.getCharmInventory();
-        setInventoryData(Array.isArray(response.data) ? response.data : []);
+      if (activeType === 'BRACELET') {
+        await ProductService.updateBraceleteQuantity(id, parseInt(newQuantity));
+      } else {
+        await CharmService.updateCharmQuantity(id, parseInt(newQuantity));
+      }
+      toast.success('Cập nhật số lượng thành công!');
+      fetchInventory();
     } catch (error) {
-        console.error(`Error updating quantity for ${activeType}:`, error);
-        toast.error(`Không thể cập nhật số lượng ${activeType === 'BRACELET' ? 'Vòng tay' : 'Charm'}.`);
+      console.error(`Error updating quantity:`, error);
+      toast.error('Không thể cập nhật số lượng.');
     }
   };
 
@@ -117,13 +114,13 @@ const ProductStock = () => {
     <div className="container page-enter-active">
       <div className="header-row">
         <div className="type-toggle-buttons">
-          <button 
+          <button
             className={`toggle-btn ${activeType === 'CHARM' ? 'active' : ''}`}
             onClick={() => setActiveType('CHARM')}
           >
             CHARM
           </button>
-          <button 
+          <button
             className={`toggle-btn ${activeType === 'BRACELET' ? 'active' : ''}`}
             onClick={() => setActiveType('BRACELET')}
           >
@@ -131,27 +128,52 @@ const ProductStock = () => {
           </button>
         </div>
         <h2>In stock</h2>
-        <button className="btn-new-stock" onClick={() => handleAddStock(null, '')}> {/* ID and Name will be picked from the table rows or through a modal later */}
+        <button className="btn-new-stock" onClick={() => handleAddStock(null, '')}>
           <FaPlus /> New Stock
         </button>
       </div>
+
       <hr className="divider" />
-      
-      <TableControls />
+
       {isLoading ? (
         <div>Đang tải tồn kho...</div>
       ) : (
-        <StockTable 
-          data={inventoryData} 
-          activeType={activeType}
-          onDistribute={handleDistribute}
-          onUpdate={handleUpdateQuantity}
-        />
+        <>
+          <StockTable
+            data={paginatedData}
+            activeType={activeType}
+            onDistribute={handleDistribute}
+            onUpdate={handleUpdateQuantity}
+          />
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="pagination-container">
+              <button
+                className="page-btn"
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                ◀ Trước
+              </button>
+              <span className="page-info">
+                Trang {currentPage} / {totalPages}
+              </span>
+              <button
+                className="page-btn"
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+              >
+                Sau ▶
+              </button>
+            </div>
+          )}
+        </>
       )}
-      
+
       <SalesChart />
     </div>
   );
 };
 
-export default ProductStock; 
+export default ProductStock;

@@ -98,7 +98,7 @@ const Admin = () => {
             <li className="admin-nav-item">
               <Link to="/admin/manage-orders">
                 <span className="admin-nav-icon">📦</span>
-                <span className="admin-nav-label">ORDER</span>
+                <span className="admin-nav-label">Order</span>
               </Link>
             </li>
             {/* <li className="admin-nav-item">
