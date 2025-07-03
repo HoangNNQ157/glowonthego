@@ -9,10 +9,9 @@ import BottomBar from '../../components/admin/BottomBar';
 import OrderService from '../../services/order.service';
 import './Dashboard.scss';
 
-// Placeholder for a new BarChart component or direct chart implementation
 const RevenueBarChart = ({ data }) => {
   if (!data || data.length === 0) {
-    return <div style={{ textAlign: 'center', padding: '20px' }}>Không có dữ liệu doanh thu để hiển thị.</div>;
+    return <div style={{ textAlign: 'center', padding: '20px' }}></div>;
   }
 
   const maxRevenue = Math.max(...data.map(d => Math.max(d.currentPeriodRevenue || 0, d.previousPeriodRevenue || 0)));
@@ -25,16 +24,12 @@ const RevenueBarChart = ({ data }) => {
           <div key={index} className="bar-group">
             <div
               className="bar current-period-bar"
-              style={{
-                height: `${(item.currentPeriodRevenue / maxRevenue) * 100}%`,
-              }}
+              style={{ height: `${(item.currentPeriodRevenue / maxRevenue) * 100}%` }}
               title={`Kỳ hiện tại: ${item.currentPeriodRevenue?.toLocaleString('vi-VN')}đ`}
             ></div>
             <div
               className="bar previous-period-bar"
-              style={{
-                height: `${(item.previousPeriodRevenue / maxRevenue) * 100}%`,
-              }}
+              style={{ height: `${(item.previousPeriodRevenue / maxRevenue) * 100}%` }}
               title={`Kỳ trước: ${item.previousPeriodRevenue?.toLocaleString('vi-VN')}đ`}
             ></div>
           </div>
@@ -55,37 +50,46 @@ const RevenueBarChart = ({ data }) => {
 
 function Dashboard() {
   const [revenueData, setRevenueData] = useState([]);
-  const [totalRevenue, setTotalRevenue] = useState(0); // Assuming API returns total
-  const [percentageChange, setPercentageChange] = useState(0); // Assuming API returns percentage change
-  const [selectedPeriod, setSelectedPeriod] = useState('day'); // 'day', 'week', 'month', 'year'
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [percentageChange, setPercentageChange] = useState(0);
+  const [selectedPeriod, setSelectedPeriod] = useState('day');
   const [loadingRevenue, setLoadingRevenue] = useState(true);
   const [errorRevenue, setErrorRevenue] = useState(null);
+  const [item2, setItem2] = useState(null);
 
   useEffect(() => {
-    const fetchRevenueData = async () => {
-      setLoadingRevenue(true);
-      setErrorRevenue(null);
-      try {
-        // The API logic mentioned day, week, month, year as 'period' query parameter
-        const response = await OrderService.getRevenueByPeriod({ period: selectedPeriod });
-        // Assuming response.data contains an array for the chart and possibly total/percentage
-        // Example structure: { chartData: [{label: '01', currentPeriodRevenue: 1000, previousPeriodRevenue: 800}, ...], total: 123456, percentageChange: 2.1 }
-        setRevenueData(response.chartData || []); // Adjust based on actual API response structure
-        setTotalRevenue(response.total || 0); // Adjust based on actual API response structure
-        setPercentageChange(response.percentageChange || 0); // Adjust based on actual API response structure
-      } catch (err) {
-        console.error("Error fetching revenue data:", err);
-        setErrorRevenue("Không thể tải dữ liệu doanh thu.");
-        setRevenueData([]);
-        setTotalRevenue(0);
-        setPercentageChange(0);
-      } finally {
-        setLoadingRevenue(false);
-      }
-    };
+  const fetchRevenueData = async () => {
+    setLoadingRevenue(true);
+    setErrorRevenue(null);
 
-    fetchRevenueData();
-  }, [selectedPeriod]); // Re-fetch when selectedPeriod changes
+    try {
+      const response = await OrderService.getRevenueByPeriod({ period: selectedPeriod });
+
+      setRevenueData(response.chartData || []);
+      setTotalRevenue(response.total || 0);
+      setPercentageChange(response.percentageChange || 0);
+
+      // CHỈ cập nhật item2 nếu có
+      if (typeof response.item2 === 'number') {
+        setItem2(response.item2);
+      }
+
+    } catch (err) {
+      console.error("Error fetching revenue data:", err);
+      setErrorRevenue("Không thể tải dữ liệu doanh thu.");
+      setRevenueData([]);
+      setTotalRevenue(0);
+      setPercentageChange(0);
+
+      // KHÔNG thay đổi item2
+    } finally {
+      setLoadingRevenue(false);
+    }
+  };
+
+  fetchRevenueData();
+}, [selectedPeriod]);
+
 
   const handlePeriodChange = (period) => {
     setSelectedPeriod(period);
@@ -94,7 +98,7 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
       <h1>Dashboard Page</h1>
-      <RevenueCard totalRevenue={totalRevenue} percentageChange={percentageChange} /> {/* Pass props to RevenueCard */}
+      <RevenueCard totalRevenue={totalRevenue} percentageChange={percentageChange} />
 
       <div className="period-selector">
         <button onClick={() => handlePeriodChange('day')} className={selectedPeriod === 'day' ? 'active' : ''}>Ngày</button>
@@ -104,16 +108,27 @@ function Dashboard() {
       </div>
 
       {loadingRevenue && <div className="loading-message">Đang tải dữ liệu doanh thu...</div>}
-      {errorRevenue && <div className="error-message">{errorRevenue}</div>}
-      {!loadingRevenue && !errorRevenue && (
-        <RevenueBarChart data={revenueData} />
+
+      {errorRevenue && !(item2 > 0) && (
+        <div className="error-message">{errorRevenue}</div>
       )}
 
-      <div style={{display: "flex", gap: "20px"}}>
+      {(!loadingRevenue && !errorRevenue) || (item2 > 0) ? (
+        <>
+          <RevenueBarChart data={revenueData} />
+          {item2 !== null && (
+            <div className="item2-display">
+              <h4>Doanh Thu: {item2.toLocaleString('vi-VN')}đ</h4>
+            </div>
+          )}
+        </>
+      ) : null}
+
+      <div style={{ display: "flex", gap: "20px" }}>
         <CircleStats />
         <ProductList />
       </div>
-      <div style={{display: "flex", gap: "20px"}}>
+      <div style={{ display: "flex", gap: "20px" }}>
         <DonutChart />
         <LineChart />
       </div>
@@ -123,4 +138,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard; 
+export default Dashboard;

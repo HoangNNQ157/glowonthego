@@ -38,6 +38,14 @@
     }
   }
 
+  .item2-display {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #2d3748;
+  font-weight: bold;
+  text-align: center;
+}
+
   .revenue-chart-container {
     background-color: #fff;
     border-radius: 8px;
@@ -147,4 +155,8 @@
   .right-list {
     width: 50%;
   }
+}
+
+.item2-display{
+  margin-bottom: 5%;
 }
