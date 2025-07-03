@@ -192,7 +192,7 @@ const ManageOrders = () => {
                     <ul className="order-items-list">
                       {order.cartItemRequests.map((item, idx) => (
                         <li key={idx}>
-                          <span className="order-item-label">ID:</span> {item.productId} &nbsp;
+                          
                           <span className="order-item-label">SL:</span> {item.quantity} &nbsp;
                           <span className="order-item-label">Loại:</span> {item.productType === 1 ? 'Charm' : 'Bracelet'}
                         </li>
@@ -308,7 +308,7 @@ const ManageOrders = () => {
                 <ul className="order-items-list">
                   {selectedOrder.cartItemRequests.map((item, idx) => (
                     <li key={idx}>
-                      <span className="order-item-label">ID:</span> {item.productId} &nbsp;
+                    
                       <span className="order-item-label">SL:</span> {item.quantity} &nbsp;
                       <span className="order-item-label">Loại:</span> {item.productType === 1 ? 'Charm' : 'Bracelet'}
                     </li>
