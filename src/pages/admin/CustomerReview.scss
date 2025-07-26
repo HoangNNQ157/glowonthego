@@ -1,0 +1,72 @@
+.customer-review-page {
+  padding: 20px;
+  background: #f8f9fa;
+  min-height: 100vh;
+
+  h1 {
+    font-size: 32px; 
+    margin-bottom: 24px;
+    font-weight: 700;
+    color: #222;
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
+    thead th {
+      padding: 16px 18px; 
+      text-align: left;
+      font-size: 17px; 
+      line-height: 1.6;
+    }
+
+  
+    thead th:first-child,
+    tbody td:first-child {
+      width: 280px;
+      min-width: 280px;
+      max-width: 320px;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 14px 18px; 
+      font-size: 16px; 
+      line-height: 1.8; 
+      color: #333;
+      word-break: break-word;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #eee;
+
+      &:hover {
+        background: #f7f9ff;
+      }
+    }
+  }
+
+  .action-btn {
+    padding: 8px 14px;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &.delete {
+      background: #dc3545;
+      color: white;
+
+      &:hover {
+        background: #b52a38;
+      }
+    }
+  }
+}

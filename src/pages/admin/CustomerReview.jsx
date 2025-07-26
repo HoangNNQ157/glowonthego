@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReviewService from '../../services/review.service';
 import { toast } from 'react-toastify';
+import './CustomerReview.scss';
 
 function CustomerReview() {
   const [reviews, setReviews] = useState([]);
@@ -34,7 +35,7 @@ function CustomerReview() {
   };
 
   return (
-    <div>
+    <div className="customer-review-page">
       <h1>Customer Review Page</h1>
       {loading ? (
         <p>Đang tải danh sách review...</p>
@@ -42,21 +43,19 @@ function CustomerReview() {
         <table className="admin-table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>User ID</th>
-              <th>Product Type</th>
-              <th>Product ID</th>
-              <th>Rating</th>
-              <th>Comment</th>
-              <th>Review Date</th>
+              <th>Tên</th>
+              <th>Loại sản phẩm</th>
+              <th>Mã sản phẩm</th>
+              <th>Đánh giá</th>
+              <th>Bình luận</th>
+              <th>Ngày đánh giá</th>
               <th>Thao tác</th>
             </tr>
           </thead>
           <tbody>
             {reviews.map((rv) => (
               <tr key={rv.id}>
-                <td>{rv.id}</td>
-                <td>{rv.userId}</td>
+                <td>{rv.user?.fullname || rv.user?.userName}</td>
                 <td>{rv.braceletId ? 'Bracelet' : 'Charm'}</td>
                 <td>{rv.braceletId || rv.charmId}</td>
                 <td>{rv.rating}</td>
