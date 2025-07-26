@@ -23,6 +23,14 @@ const Account = () => {
   const [editEmail, setEditEmail] = useState('');
   const [editPhoneNumber, setEditPhoneNumber] = useState('');
 
+  const deliveryStatusOptions = [
+    { value: 0, label: "Đã chuẩn bị" },
+    { value: 1, label: "Đang giao" },
+    { value: 2, label: "Đã giao" },
+    { value: 3, label: "Giao thất bại" },
+    { value: 4, label: "Đã hủy" },
+  ];
+
   const fetchUserAndOrders = async () => {
     try {
       // Fetch user data
@@ -247,7 +255,10 @@ const Account = () => {
                 <p><strong>Total Amount:</strong> {order.totalAmount ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.totalAmount) : 'N/A'}</p>
                 <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
                 <p><strong>Delivery Address:</strong> {order.address}</p>
-                <p><strong>Delivery Status:</strong> {order.deliveryStatus === 1 ? 'Delivered' : 'Not Delivered'}</p>
+                <p>
+                  <strong>Delivery Status:</strong>{" "}
+                  {deliveryStatusOptions.find(opt => opt.value === order.deliveryStatus)?.label || "Không xác định"}
+                </p>
                 <p><strong>Phone Number:</strong> {order.phoneNumber}</p>
                 <p><strong>Note:</strong> {order.note}</p>
                 <h4>Products:</h4>
